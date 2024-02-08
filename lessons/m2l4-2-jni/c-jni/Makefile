@@ -6,7 +6,7 @@ INC=-I../build/jniIncludes -I/usr/include -I/usr/include/x86_64-linux-gnu -I$(JD
 CC = gcc
 OUT_FILE_NAME = libc_jni.so
 
-CFLAGS= -fPIC -O0 -g -Wall -c
+CFLAGS= -fPIC -O0 -g -Wall -c -fpermissive
 
 OBJ_DIR=../build/c/obj
 

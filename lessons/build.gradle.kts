@@ -1,9 +1,8 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.kotlin.multiplatform) apply false
+    kotlin("jvm") apply false
 }
 
-group = "ru.otus.otuskotlin.marketplace"
+group = "com.otus.otuskotlin.marketplace"
 version = "0.0.1"
 
 repositories {
