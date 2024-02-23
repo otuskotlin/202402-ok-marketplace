@@ -1,0 +1,24 @@
+{
+  "realm" : "otus-marketplace",
+  "users" : [ {
+    "id" : "638647df-d9e4-4759-8748-6f99ac220d11",
+    "createdTimestamp" : 1706964619142,
+    "username" : "otus-test",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "credentials" : [ {
+      "id" : "56beee96-cf26-4f6e-83db-8138530e0148",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1706964634548,
+      "secretData" : "{\"value\":\"CBy36ufg5bdAyXTLX9gMYyxw4QXKiAkNox6NFYi8FuQ=\",\"salt\":\"wasUxUctTzzm0c5HTyy7Sw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-otus-marketplace" ],
+    "notBefore" : 0,
+    "groups" : [ "/USER" ]
+  } ]
+}
