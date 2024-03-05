@@ -23,6 +23,9 @@ Marketplace -- это площадка, на которой пользовате
     2. [Нефункциональные требования](./docs/02-analysis/02-nonfunctional-requirements.md)
 3. DevOps
 4. Архитектура
+   1. [ADR](./docs/04-architecture/01-adrs.md)
+   2. [Описание API](./docs/04-architecture/02-api.md)
+   3. [Компонентная схема](./docs/04-architecture/03-arch.md)
 5. Тесты
 
 # Структура проекта
