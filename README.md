@@ -1,8 +1,8 @@
-# 202312-ok-marketplace
+# 202402-ok-marketplace
 
 Учебный проект курса
 [Kotlin Backend Developer](https://otus.ru/lessons/kotlin/).
-Поток курса 2023-12.
+Поток курса 2024-02.
 
 # Структура проекта
 
