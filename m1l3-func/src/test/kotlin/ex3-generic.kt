@@ -22,9 +22,10 @@ class GenericTest {
     }
      */
 
-    fun variant1(klass: KClass<*>): String = klass.simpleName ?: "(unknown)"
-    inline fun <reified T> variant2() = variant1(T::class)
+    private fun variant1(klass: KClass<*>): String = klass.simpleName ?: "(unknown)"
+    private inline fun <reified T> variant2() = variant1(T::class)
 
-    fun <T> elementAsList(el: T): List<T> = listOf(el)
+    @Suppress("SameParameterValue")
+    private fun <T> elementAsList(el: T): List<T> = listOf(el)
 
 }

@@ -5,8 +5,7 @@ import kotlin.test.assertFails
 class TypesTest {
     @Test
     fun resFun() {
-        unitRes()
-
+        assertEquals(Unit, unitRes())
         assertEquals(220, intRes())
     }
 
