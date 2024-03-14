@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/ad/create"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "create",
+      "result": "success",
+      "ad": {
+        "id": "123",
+        "title": "{{{jsonPath request.body '$.ad.title'}}}",
+        "description": "Требуется болт 100x5 с шестигранной шляпкой",
+        "adType": "{{{jsonPath request.body '$.ad.adType'}}}",
+        "visibility": "public"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

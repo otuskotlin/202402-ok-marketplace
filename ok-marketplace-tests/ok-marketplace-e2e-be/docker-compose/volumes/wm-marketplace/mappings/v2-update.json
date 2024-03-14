@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v2/ad/update"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "update",
+      "result": "success",
+      "ad": {
+        "id": "123",
+        "title": "Selling Nut",
+        "description": "Требуется болт 100x5 с шестигранной шляпкой",
+        "adType": "demand",
+        "visibility": "public"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

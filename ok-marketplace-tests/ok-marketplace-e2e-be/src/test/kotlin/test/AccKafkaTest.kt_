@@ -1,0 +1,12 @@
+package ru.otus.otuskotlin.marketplace.e2e.be.test
+
+import ru.otus.otuskotlin.marketplace.e2e.be.fixture.BaseFunSpec
+import ru.otus.otuskotlin.marketplace.e2e.be.docker.KafkaDockerCompose
+import ru.otus.otuskotlin.marketplace.blackbox.fixture.client.KafkaClient
+
+class AccKafkaTest : BaseFunSpec(KafkaDockerCompose, {
+    val client = KafkaClient(KafkaDockerCompose)
+
+    testApiV1(client)
+    testApiV2(client)
+})

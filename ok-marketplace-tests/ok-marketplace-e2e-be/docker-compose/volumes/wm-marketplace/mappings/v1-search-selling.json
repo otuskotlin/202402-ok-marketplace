@@ -1,0 +1,35 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/ad/search",
+    "bodyPatterns": [
+      {"matchesJsonPath" : "$.adFilter[?(@.searchString == 'Selling')]"}
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "ads": [
+        {
+          "id": "123",
+          "title": "Selling Bolt",
+          "description": "Требуется болт 100x5 с шестигранной шляпкой",
+          "adType": "demand",
+          "visibility": "public"
+        },
+        {
+          "id": "124",
+          "title": "Selling Nut",
+          "description": "Требуется болт 100x5 с шестигранной шляпкой",
+          "adType": "demand",
+          "visibility": "public"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
