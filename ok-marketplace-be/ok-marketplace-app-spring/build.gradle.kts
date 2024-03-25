@@ -39,6 +39,9 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
+
+    // stubs
+    testImplementation(project(":ok-marketplace-stubs"))
 }
 
 tasks {

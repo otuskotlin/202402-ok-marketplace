@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.markeplace.app.spring.stub
+package ru.otus.otuskotlin.markeplace.app.spring.mock
 
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 // Temporary simple test with stubs
 @WebFluxTest(AdControllerV2Fine::class, AdConfig::class)
-internal class AdControllerV2Test {
+internal class AdControllerV2EmptyTest {
     @Autowired
     private lateinit var webClient: WebTestClient
 
