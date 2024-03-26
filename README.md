@@ -48,16 +48,59 @@ Marketplace -- это площадка, на которой пользовате
         2. [m2l4-2-jni](lessons/m2l4-2-jni) - Kotlin JVM - Native (JNI)
     5. [m2l5-gradle](lessons/m2l5-gradle) - Расширенные возможности Gradle, Kotlin DSL
 
+## Плагины
+
+### Плагины Gradle сборки проекта
+
+1. [build-plugin](build-plugin) Модуль с плагинами
+2. [BuildPluginJvm](build-plugin/src/main/kotlin/BuildPluginJvm.kt) Плагин для сборки проектов JVM
+2. [BuildPluginMultiplarform](build-plugin/src/main/kotlin/BuildPluginMultiplatform.kt) Плагин для сборки
+   мультиплатформенных проектов
+
 ## Проектные модули
 
 ### Транспортные модели, API
 
 1. [specs](specs) - описание API в форме OpenAPI-спецификаций
 2. [ok-marketplace-api-v1-jackson](ok-marketplace-be/ok-marketplace-api-v1-jackson) - Генерация первой версии
-   транспортных модеелй с Jackson
-3. [ok-marketplace-api-v2-kmp](ok-marketplace-be/ok-marketplace-api-v2-kmp) - Генерация второй версии транспортных
+3. [ok-marketplace-api-v1-mappers](ok-marketplace-be/ok-marketplace-api-v1-mappers) - Маперы из API v1 во внутренние
+   модели
+4. [ok-marketplace-api-v2-kmp](ok-marketplace-be/ok-marketplace-api-v2-kmp) - Генерация второй версии транспортных
    моделей с KMP
+5. [ok-marketplace-common](ok-marketplace-be/ok-marketplace-common) - модуль с общими классами для модулей проекта. В
+   частности, там располагаются внутренние модели и контекст.
+6. [ok-marketplace-mappers-log1](ok-marketplace-be/ok-marketplace-mappers-log1) - Мапер между внутренними моделями и
+   моделями логирования первой версии
 
 ### Фреймворки и транспорты
-1. [ok-marketplace-app-spring](ok-marketplace-be/ok-marketplace-app-spring) - Приложение на Spring Framework
 
+1. [ok-marketplace-app-spring](ok-marketplace-be/ok-marketplace-app-spring) - Приложение на Spring Framework
+2. [ok-marketplace-app-ktor](ok-marketplace-be/ok-marketplace-app-ktor) - Приложение на Ktor
+
+### Модули бизнес-логики
+
+1. [ok-marketplace-stubs](ok-marketplace-be/ok-marketplace-stubs) - Стабы для ответов сервиса
+2. [ok-marketplace-biz](ok-marketplace-be/ok-marketplace-biz) - Модуль бизнес-логики приложения: обслуживание стабов,
+   валидация, работа с БД
+
+## Библиотеки
+
+### Мониторинг и логирование
+
+1. [deploy](deploy) - Инструменты мониторинга и деплоя
+2. [ok-marketplace-lib-logging-common](ok-marketplace-libs/ok-marketplace-lib-logging-common) - Общие объявления для
+   логирования
+3. [ok-marketplace-lib-logging-kermit](ok-marketplace-libs/ok-marketplace-lib-logging-kermit) - Библиотека логирования
+   на базе библиотеки
+   Kermit
+4. [ok-marketplace-lib-logging-logback](ok-marketplace-libs/ok-marketplace-lib-logging-logback) - Библиотека логирования
+   на базе библиотеки Logback
+5. [ok-marketplace-lib-logging-socket](ok-marketplace-libs/ok-marketplace-lib-logging-socket) - Библиотека логирования
+   на базе библиотеки Ktor и протокола TCP socket
+
+## Тестирование
+
+### Сквозные/интеграционные тесты
+
+1. [ok-marketplace-e2e-be](ok-marketplace-tests/ok-marketplace-e2e-be) - Сквозные/интеграционные тесты для бэкенда
+   системы

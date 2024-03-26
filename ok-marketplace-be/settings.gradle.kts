@@ -41,4 +41,5 @@ include(":ok-marketplace-stubs")
 include(":ok-marketplace-app-common")
 //include(":ok-marketplace-app-tmp")
 include(":ok-marketplace-app-spring")
+include(":ok-marketplace-app-ktor")
 
