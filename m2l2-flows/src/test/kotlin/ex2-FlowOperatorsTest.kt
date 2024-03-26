@@ -78,9 +78,9 @@ class FlowOperatorsTest {
             }
         }
             .onStart { println("On start") } // Запустится один раз только вначале
-            .onCompletion { println(" On completion") } // Запустится один раз только вконце
             .catch { println("Catch: ${it.message}") } // Запустится только при генерации исключения
             .onEach { println("On each: $it") } // Генерируется для каждого сообщения
+            .onCompletion { println(" On completion") } // Запустится один раз только вконце
             .collect { }
     }
 

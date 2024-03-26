@@ -81,6 +81,7 @@ class FlowSharedTest {
         launch {
             (1..20).forEach {
                 delay(20)
+//                mshState.value = "zz: $it" // Так тоже будет работать
                 collector.emit("zz: $it")
             }
         }
