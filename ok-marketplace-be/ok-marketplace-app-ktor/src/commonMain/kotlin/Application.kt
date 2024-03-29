@@ -7,9 +7,11 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import ru.otus.otuskotlin.marketplace.api.v2.apiV2Mapper
 import ru.otus.otuskotlin.marketplace.app.ktor.v2.v2Ad
 import ru.otus.otuskotlin.marketplace.app.ktor.plugins.initAppSettings
+import ru.otus.otuskotlin.marketplace.app.ktor.v2.wsHandlerV2
 
 fun Application.module(
     appSettings: MkplAppSettings = initAppSettings()
@@ -28,6 +30,7 @@ fun Application.module(
         */
         anyHost()
     }
+    install(WebSockets)
 
     routing {
         get("/") {
@@ -38,6 +41,9 @@ fun Application.module(
                 json(apiV2Mapper)
             }
             v2Ad(appSettings)
+            webSocket("/ws") {
+                wsHandlerV2(appSettings)
+            }
         }
     }
 }

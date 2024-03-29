@@ -2,6 +2,8 @@ package ru.otus.otuskotlin.markeplace.app.spring.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import ru.otus.otuskotlin.markeplace.app.spring.base.MkplAppSettings
+import ru.otus.otuskotlin.markeplace.app.spring.base.SpringWsSessionRepo
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
 import ru.otus.otuskotlin.marketplace.common.MkplCorSettings
 import ru.otus.otuskotlin.marketplace.logging.common.MpLoggerProvider
@@ -19,6 +21,7 @@ class AdConfig {
     @Bean
     fun corSettings(): MkplCorSettings = MkplCorSettings(
         loggerProvider = loggerProvider(),
+        wsSessions = wsRepo(),
     )
 
     @Bean
@@ -29,4 +32,8 @@ class AdConfig {
         corSettings = corSettings,
         processor = processor,
     )
+
+    @Bean
+    fun wsRepo(): SpringWsSessionRepo = SpringWsSessionRepo()
+
 }
