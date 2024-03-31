@@ -87,6 +87,7 @@ public class Ex5InteroperabilityJavaTest {
         // Без try-catch работать не будет из-за объявленного checked exception
         try {
             mc.syncFun();
+            mc.funWithSync();
         } catch (SyncFailedException e) {
             System.out.println("Exception???");
         }
