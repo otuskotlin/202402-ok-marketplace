@@ -106,8 +106,8 @@ interface IMpLogWrapper: AutoCloseable {
                 val args = listOfNotNull(
                     "${Clock.System.now()} [${level.name}]$markerString: $msg",
                     e?.let { "${it.message ?: "Unknown reason"}:\n${it.stackTraceToString()}" },
-                    data.toString(),
-                    objs.toString(),
+                    data?.toString(),
+                    objs?.toString(),
                 )
                 println(args.joinToString("\n"))
             }

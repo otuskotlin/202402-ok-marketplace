@@ -30,6 +30,10 @@ fun Application.moduleJvm(
     }
     module(appSettings)
 
+    // Неофициальное задание. Попробуйте сделать этот код работающим
+//    val rabbitServer = RabbitApp(appSettings, this@moduleJvm)
+//    rabbitServer?.start()
+
     routing {
         route("v1") {
             install(ContentNegotiation) {
@@ -45,3 +49,4 @@ fun Application.moduleJvm(
         }
     }
 }
+
