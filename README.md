@@ -18,3 +18,6 @@
    1. [m2l1-coroutines](m2l1-coroutines) - Асинхронное и многопоточное программирование с корутинами
    2. [m2l2-flows](m2l2-flows) - Асинхронное и многопоточное программирование с Flow
    3. [m2l3-kmp](m2l3-kmp) - Kotlin Multiplatform
+   4. m2l4 - Интероперабельность Kotlin с другими языками
+      1. [m2l4-1-interop](m2l4-1-interop) - Интероперабельность Kotlin Native с C
+      2. [m2l4-2-jni](m2l4-2-jni) - Интероперабельность Kotlin JVM с C

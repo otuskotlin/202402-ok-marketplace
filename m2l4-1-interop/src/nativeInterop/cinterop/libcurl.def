@@ -1,0 +1,30 @@
+# list of header files to generate Kotlin stubs
+headers = curl/curl.h
+
+# You also need to specify linking parameters for different platforms
+compilerOpts.linux_x64 = -I/usr/include -I/usr/include/x86_64-linux-gnu
+linkerOpts.osx = -L/opt/local/lib -L/usr/local/opt/curl/lib -lcurl
+linkerOpts.linux_x64 = -L/usr/lib/x86_64-linux-gnu -lcurl
+
+---
+
+// Структура на СИ, которую будем использовать в Kotlin-коде
+typedef struct {
+  int a;
+  double b;
+} MySumStruct;
+
+// Функция на СИ, принимающая саму структуру в качестве аргумента
+double sum_struct(MySumStruct s) {
+	return (double)s.a + s.b;
+}
+
+// Функция на СИ, принимающая ссылку на структуру в качестве аргумента
+double sum_ref(MySumStruct *s) {
+	return (double)s->a + s->b;
+}
+
+// Функция на СИ, принимающая ссылку на структуру и вызывающую код из Котлин
+double sum_fun(MySumStruct *s, double (*callback)(int a, double b)) {
+	return callback(s->a, s->b);
+}
