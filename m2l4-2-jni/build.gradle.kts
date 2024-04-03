@@ -36,6 +36,7 @@ kotlin {
 tasks {
     val pathToLib: String = project.layout.buildDirectory.dir("c/lib").get().toString()
     println("PATH TO LIB: $pathToLib")
+
     withType<Test>().all {
         systemProperty("java.library.path", pathToLib)
     }

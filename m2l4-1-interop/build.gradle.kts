@@ -34,6 +34,7 @@ kotlin {
                 cinterops {
                     // настраиваем cinterop в файле src/nativeInterop/cinterop/libcurl.def
                     val libcurl by creating
+//                    create("libcurl")
                 }
             }
             binaries {
@@ -79,6 +80,9 @@ kotlin {
         nativeMain {
         }
         nativeTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
         }
 
     }
