@@ -59,6 +59,19 @@ Marketplace -- это площадка, на которой пользовате
 
 ## Проектные модули
 
+## Мониторинг и логирование
+
+1. [deploy](deploy) - Инструменты мониторинга и деплоя
+2. [ok-marketplace-lib-logging-common](ok-marketplace-libs/ok-marketplace-lib-logging-common) - Общие объявления для
+   логирования
+3. [ok-marketplace-lib-logging-kermit](ok-marketplace-libs/ok-marketplace-lib-logging-kermit) - Библиотека логирования
+   на базе библиотеки
+   Kermit
+4. [ok-marketplace-lib-logging-logback](ok-marketplace-libs/ok-marketplace-lib-logging-logback) - Библиотека логирования
+   на базе библиотеки Logback
+5. [ok-marketplace-lib-logging-socket](ok-marketplace-libs/ok-marketplace-lib-logging-socket) - Библиотека логирования
+   на базе TCP-сокетов
+
 ### Транспортные модели, API
 
 1. [specs](specs) - описание API в форме OpenAPI-спецификаций
@@ -69,13 +82,15 @@ Marketplace -- это площадка, на которой пользовате
    моделей с KMP
 5. [ok-marketplace-common](ok-marketplace-be/ok-marketplace-common) - модуль с общими классами для модулей проекта. В
    частности, там располагаются внутренние модели и контекст.
-6. [ok-marketplace-mappers-log1](ok-marketplace-be/ok-marketplace-mappers-log1) - Мапер между внутренними моделями и
+6. [ok-marketplace-mappers-log1](ok-marketplace-be/ok-marketplace-api-log1) - Мапер между внутренними моделями и
    моделями логирования первой версии
 
 ### Фреймворки и транспорты
 
 1. [ok-marketplace-app-spring](ok-marketplace-be/ok-marketplace-app-spring) - Приложение на Spring Framework
 2. [ok-marketplace-app-ktor](ok-marketplace-be/ok-marketplace-app-ktor) - Приложение на Ktor
+3. [ok-marketplace-app-rabbit](ok-marketplace-be/ok-marketplace-app-rabbit) - Микросервис на RabbitMQ
+4. [ok-marketplace-app-kafka](ok-marketplace-be/ok-marketplace-app-kafka) - Микросервис на Kafka
 
 ### Модули бизнес-логики
 
