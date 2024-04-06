@@ -36,7 +36,7 @@ tasks {
         dependsOn(myCustomTask)
 
         group = "my group"
-        from(layout.buildDirectory.dir("my-in"))
+        from(myCustomTask.outputs)
         into(layout.buildDirectory.dir("tmp"))
     }
 

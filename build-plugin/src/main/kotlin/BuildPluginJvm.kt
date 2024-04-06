@@ -8,6 +8,7 @@ internal class BuildPluginJvm : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
         pluginManager.apply("org.jetbrains.kotlin.jvm")
+//        pluginManager.apply(KotlinPlatformJvmPlugin::class.java)
         group = rootProject.group
         version = rootProject.version
     }
