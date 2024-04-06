@@ -36,7 +36,6 @@ kotlin {
 tasks {
     val pathToLib: String = project.layout.buildDirectory.dir("c/lib").get().toString()
     println("PATH TO LIB: $pathToLib")
-
     withType<Test>().all {
         systemProperty("java.library.path", pathToLib)
     }
@@ -49,8 +48,7 @@ tasks {
 
         // For caching
         inputs.dir("src/jvmMain/kotlin")
-//        outputs.dir("src/jvmMain/generated/jni")
-        outputs.dir(jniHeaderDirectory)
+        outputs.dir("src/jvmMain/generated/jni")
 
         doLast {
             val javaHome = Jvm.current().javaHome
