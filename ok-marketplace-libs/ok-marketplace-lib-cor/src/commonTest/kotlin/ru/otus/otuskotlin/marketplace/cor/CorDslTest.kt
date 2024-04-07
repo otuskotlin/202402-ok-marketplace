@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 class CorBaseTest {
-    /*private suspend fun execute(dsl: ICorExecDsl<TestContext>): TestContext {
+    private suspend fun execute(dsl: ICorExecDsl<TestContext>): TestContext {
         val ctx = TestContext()
         dsl.build().exec(ctx)
         return ctx
@@ -100,6 +100,6 @@ class CorBaseTest {
 
     private fun ICorChainDsl<TestContext>.printResult() = worker(title = "Print example") {
         println("some = $some")
-    }*/
+    }
 }
 

@@ -1,11 +1,12 @@
 package ru.otus.otuskotlin.marketplace.cor
 
 import kotlinx.coroutines.test.runTest
+import ru.otus.otuskotlin.marketplace.cor.handlers.CorWorker
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CorWorkerTest {
-    /*@Test
+    @Test
     fun `worker should execute handle`() = runTest {
         val worker = CorWorker<TestContext>(
             title = "w1",
@@ -39,5 +40,5 @@ class CorWorkerTest {
         worker.exec(ctx)
         assertEquals("some error", ctx.history)
     }
-    */
+
 }
