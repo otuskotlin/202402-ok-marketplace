@@ -126,7 +126,7 @@ class V2AdStubApiTest {
     ) { response ->
         val responseObj = response.body<AdOffersResponse>()
         assertEquals(200, response.status.value)
-        assertEquals("d-666-01", responseObj.ads?.first()?.id)
+        assertEquals("s-666-01", responseObj.ads?.first()?.id)
     }
 
     private inline fun <reified T: IRequest> v2TestApplication(
