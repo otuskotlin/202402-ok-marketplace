@@ -1,0 +1,92 @@
+# Минимальная версия инфраструктуры на базе
+# OpenSearch
+# OpenSearch Dashboards
+# Kafka
+# Logstash
+
+version: '3'
+services:
+
+  app:
+    image: bitnami/kafka:latest
+    depends_on:
+      - kafka
+    volumes:
+      - ./volumes/app-kafka/send-jsons.sh:/send-jsons.sh
+    entrypoint: /send-jsons.sh
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - '9092:9092'
+    environment:
+      # Во внутренней сети docker-compose слушаем адрес kafka:9092
+      # Из внешней сети docker-compose будем слушать localhost:9094
+      # Как альтерантива, можно вычислять адрес как-то так:
+      # HOSTNAME_COMMAND: curl http://169.254.169.254/latest/meta-data/public-hostname
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:9094
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,OUTSIDE://localhost:9094
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - ALLOW_PLAINTEXT_LISTENER=yes
+
+
+  logstash:
+    container_name: logstash
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:latest
+    depends_on:
+      - kafka
+      - opensearch
+    ports:
+      - "5044:5044"
+      - "1111:1111"
+    environment:
+      BOOTSTRAP_SERVERS: "kafka:9092"
+    volumes:
+#      - ./volumes/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./volumes/logstash/10-mp-logs.conf:/usr/share/logstash/pipeline/10-mp-logs.conf
+
+  opensearch:
+    container_name: opensearch
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - http.port=9200
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - '9200:9200'
+      - '9600:9600'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["https://opensearch:9200"]'
+    depends_on:
+      - opensearch
+
+volumes:
+  opensearch-data:
