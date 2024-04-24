@@ -35,7 +35,8 @@ class RequestV2SerializationTest {
     @Test
     fun deserialize() {
         val json = apiV2Mapper.encodeToString(request)
-        val obj = apiV2Mapper.decodeFromString<IRequest>(json) as AdCreateRequest
+//        val obj = apiV2Mapper.decodeFromString<AdCreateRequest>(json) // Не добавляет дескриминатор
+        val obj = apiV2Mapper.decodeFromString<IRequest>(json) as AdCreateRequest // Добавляет дескриминатор
 
         assertEquals(request, obj)
     }
