@@ -22,7 +22,7 @@ Marketplace -- это площадка, на которой пользовате
     1. [Функциональные требования](./docs/02-analysis/01-functional-requiremens.md)
     2. [Нефункциональные требования](./docs/02-analysis/02-nonfunctional-requirements.md)
 3. DevOps
-   1. [Файлы сборки](./deploy)
+    1. [Файлы сборки](./deploy)
 4. Архитектура
     1. [ADR](docs/03-architecture/01-adrs.md)
     2. [Описание API](docs/03-architecture/02-api.md)
@@ -47,3 +47,14 @@ Marketplace -- это площадка, на которой пользовате
         1. [m2l4-1-interop](lessons/m2l4-1-interop) - Kotlin JS/Kotlin Native
         2. [m2l4-2-jni](lessons/m2l4-2-jni) - Kotlin JVM - Native (JNI)
     5. [m2l5-gradle](lessons/m2l5-gradle) - Расширенные возможности Gradle, Kotlin DSL
+
+## Проектные модули
+
+### Транспортные модели, API
+
+1. [specs](specs) - описание API в форме OpenAPI-спецификаций
+2. [ok-marketplace-api-v1-jackson](ok-marketplace-be/ok-marketplace-api-v1-jackson) - Генерация первой версии
+   транспортных модеелй с Jackson
+3. [ok-marketplace-api-v2-kmp](ok-marketplace-be/ok-marketplace-api-v2-kmp) - Генерация второй версии транспортных
+   моделей с KMP
+
