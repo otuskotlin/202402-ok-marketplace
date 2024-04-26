@@ -1,0 +1,68 @@
+<mxfile host="app.diagrams.net" modified="2024-04-26T05:51:30.614Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="_Rg0Z48JUxjlms79nvud" version="24.2.7" type="device">
+  <diagram name="Страница — 1" id="fwJDQmDWj_-vJRRBCIs1">
+    <mxGraphModel dx="1050" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WsvaUiyCxC51xsmZXI09-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-10" target="WsvaUiyCxC51xsmZXI09-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="210" />
+              <mxPoint x="220" y="210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-10" value="Clients" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=1 1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="50" y="170" width="80" height="273.25" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-2" value="" style="shape=actor;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="361.5" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-7" target="WsvaUiyCxC51xsmZXI09-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="318.29999999999995" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-6" value="Оповещаем об изменениях" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.02;entryY=0.851;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-4" target="WsvaUiyCxC51xsmZXI09-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="378" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="490" y="403" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-4" value="Delay,&lt;div&gt;Order,&lt;/div&gt;&lt;div&gt;Refine&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="291.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-16" value="Логи" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;dashPattern=1 1;strokeWidth=1;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-7" target="WsvaUiyCxC51xsmZXI09-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-7" value="WAL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="300" y="281.5" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-8" value="" style="shape=actor;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="291.5" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-9" value="" style="shape=actor;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="221.5" width="40" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-11" value="Команда на изменение" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-10" target="WsvaUiyCxC51xsmZXI09-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="322" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-12" value="Собираем данные из лога, сохраняем как документ" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-14" value="Document" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="450" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="WsvaUiyCxC51xsmZXI09-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="WsvaUiyCxC51xsmZXI09-12" target="WsvaUiyCxC51xsmZXI09-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
