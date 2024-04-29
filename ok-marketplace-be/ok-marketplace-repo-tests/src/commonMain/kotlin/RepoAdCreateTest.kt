@@ -10,8 +10,6 @@ import kotlin.test.*
 abstract class RepoAdCreateTest {
     abstract val repo: IRepoAdInitializable
 
-    protected open val lockNew: MkplAdLock = MkplAdLock("20000000-0000-0000-0000-000000000002")
-
     private val createObj = MkplAd(
         title = "create object",
         description = "create object description",
@@ -19,8 +17,6 @@ abstract class RepoAdCreateTest {
         visibility = MkplVisibility.VISIBLE_TO_GROUP,
         adType = MkplDealSide.SUPPLY,
     )
-
-    private val createBadObj = createObj.copy(title = "")
 
     @Test
     fun createSuccess() = runRepoTest {

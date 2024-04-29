@@ -4,9 +4,7 @@ import ru.otus.otuskotlin.marketplace.repo.inmemory.AdRepoInMemory
 
 class AdRepoInMemoryCreateTest : RepoAdCreateTest() {
     override val repo = AtRepoInitialized(
-        AdRepoInMemory(
-            randomUuid = { lockNew.asString() }
-        ),
+        AdRepoInMemory(),
         initObjects = initObjects,
     )
 }
@@ -34,9 +32,7 @@ class AdRepoInMemorySearchTest : RepoAdSearchTest() {
 
 class AdRepoInMemoryUpdateTest : RepoAdUpdateTest() {
     override val repo = AtRepoInitialized(
-        AdRepoInMemory(
-            randomUuid = { lockNew.asString() }
-        ),
+        AdRepoInMemory(),
         initObjects = initObjects,
     )
 }
