@@ -38,6 +38,7 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines" }
 coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
 cor = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-cor" }
+uuid = "com.benasher44:uuid:0.8.4"
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
@@ -78,6 +79,9 @@ spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 # Message Queues
 rabbitmq-client = { module = "com.rabbitmq:amqp-client", version = "5.20.0" }
 kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
+
+# Databases
+db-cache4k = "io.github.reactivecircus.cache4k:cache4k:0.13.0"
 
 # Testing
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
