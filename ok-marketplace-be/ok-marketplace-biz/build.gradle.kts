@@ -4,29 +4,34 @@ plugins {
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(projects.okMarketplaceCommon)
-                api(projects.okMarketplaceRepoCommon)
+        all { languageSettings.optIn("kotlin.RequiresOptIn") }
 
-                implementation(libs.coroutines.core)
-                implementation(libs.db.cache4k)
-                implementation(libs.uuid)
+        commonMain {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+
+                implementation(libs.cor)
+
+                implementation(project(":ok-marketplace-common"))
+                implementation(project(":ok-marketplace-stubs"))
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+
+                api(libs.coroutines.test)
                 implementation(projects.okMarketplaceRepoTests)
+                implementation(projects.okMarketplaceRepoInmemory)
             }
         }
-        val jvmMain by getting {
+        jvmMain {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
             }
         }
-        val jvmTest by getting {
+        jvmTest {
             dependencies {
                 implementation(kotlin("test-junit"))
             }
