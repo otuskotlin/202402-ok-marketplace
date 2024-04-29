@@ -9,26 +9,17 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-private val stub = MkplAdStub.get()
-
 fun validationDescriptionCorrect(command: MkplCommand, processor: MkplAdProcessor) = runTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.get(),
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkplState.FAILING, ctx.state)
-    assertEquals("abc", ctx.adValidated.description)
+    assertContains(ctx.adValidated.description, "болт")
 }
 
 fun validationDescriptionTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest {
@@ -36,14 +27,9 @@ fun validationDescriptionTrim(command: MkplCommand, processor: MkplAdProcessor) 
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "abc",
-            description = " \n\tabc \n\t",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            description = " \n\tabc \n\t"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -56,14 +42,9 @@ fun validationDescriptionEmpty(command: MkplCommand, processor: MkplAdProcessor)
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "abc",
-            description = "",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            description = ""
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
@@ -78,14 +59,9 @@ fun validationDescriptionSymbols(command: MkplCommand, processor: MkplAdProcesso
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "abc",
-            description = "!@#$%^&*(),.{}",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            description = "!@#$%^&*(),.{}"
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)

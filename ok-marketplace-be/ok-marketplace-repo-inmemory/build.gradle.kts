@@ -6,8 +6,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":ok-marketplace-common"))
-                implementation(project(":ok-marketplace-repo-common"))
+                implementation(projects.okMarketplaceCommon)
+                api(projects.okMarketplaceRepoCommon)
 
                 implementation(libs.coroutines.core)
                 implementation(libs.db.cache4k)
@@ -18,7 +18,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation(project(":ok-marketplace-repo-tests"))
+                implementation(projects.okMarketplaceRepoTests)
             }
         }
         val jvmMain by getting {

@@ -9,21 +9,14 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-private val stub = MkplAdStub.get()
-
 fun validationTitleCorrect(command: MkplCommand, processor: MkplAdProcessor) = runTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            title = "abc"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -36,14 +29,9 @@ fun validationTitleTrim(command: MkplCommand, processor: MkplAdProcessor) = runT
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = " \n\t abc \t\n ",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            title = " \n\t abc \t\n "
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -56,14 +44,9 @@ fun validationTitleEmpty(command: MkplCommand, processor: MkplAdProcessor) = run
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = stub.id,
-            title = "",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            title = ""
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
@@ -78,14 +61,9 @@ fun validationTitleSymbols(command: MkplCommand, processor: MkplAdProcessor) = r
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = MkplAdId("123"),
-            title = "!@#$%^&*(),.{}",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            title = "!@#$%^&*(),.{}"
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
