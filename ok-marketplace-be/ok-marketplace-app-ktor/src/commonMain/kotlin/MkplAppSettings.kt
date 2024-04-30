@@ -8,4 +8,4 @@ data class MkplAppSettings(
     val appUrls: List<String> = emptyList(),
     override val corSettings: MkplCorSettings = MkplCorSettings(),
     override val processor: MkplAdProcessor = MkplAdProcessor(corSettings),
-): IMkplAppSettings
+) : IMkplAppSettings

@@ -47,5 +47,6 @@ include(":ok-marketplace-app-kafka")
 // DB
 include(":ok-marketplace-repo-common")
 include(":ok-marketplace-repo-inmemory")
+include(":ok-marketplace-repo-stubs")
 include(":ok-marketplace-repo-tests")
 

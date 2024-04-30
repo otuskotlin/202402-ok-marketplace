@@ -5,9 +5,10 @@ import ru.otus.otuskotlin.marketplace.common.models.MkplAd
 /**
  * Делегат для всех репозиториев, позволяющий инициализировать базу данных предзагруженными данными
  */
-class AtRepoInitialized(
+class AdRepoInitialized(
     private val repo: IRepoAdInitializable,
-    private val initObjects: Collection<MkplAd> = emptyList(),
+    initObjects: Collection<MkplAd> = emptyList(),
 ) : IRepoAdInitializable by repo {
+    @Suppress("unused")
     val initializedObjects: List<MkplAd> = save(initObjects).toList()
 }

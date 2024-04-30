@@ -74,6 +74,11 @@ kotlin {
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.ktor.serialization.json)
 
+                // DB
+                implementation(projects.okMarketplaceRepoCommon)
+                implementation(projects.okMarketplaceRepoStubs)
+                implementation(projects.okMarketplaceRepoInmemory)
+
                 // logging
                 implementation(project(":ok-marketplace-api-log1"))
                 implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-common")
