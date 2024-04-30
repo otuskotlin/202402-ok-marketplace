@@ -12,7 +12,7 @@ abstract class BaseBizValidationTest {
     private val repo = AdRepoInitialized(
         repo = AdRepoInMemory(),
         initObjects = listOf(
-            MkplAdStub.get(),
+            MkplAdStub.prepareResult {  },
         ),
     )
     private val settings by lazy { MkplCorSettings(repoTest = repo) }
