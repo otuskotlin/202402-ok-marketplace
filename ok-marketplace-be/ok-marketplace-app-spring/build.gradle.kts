@@ -35,13 +35,17 @@ dependencies {
     // biz
     implementation(project(":ok-marketplace-biz"))
 
+    // DB
+    implementation(projects.okMarketplaceRepoStubs)
+    implementation(projects.okMarketplaceRepoInmemory)
+    testImplementation(projects.okMarketplaceRepoCommon)
+    testImplementation(projects.okMarketplaceStubs)
+
     // tests
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
-
-    // stubs
-    testImplementation(project(":ok-marketplace-stubs"))
+    testImplementation(libs.spring.mockk)
 }
 
 tasks {

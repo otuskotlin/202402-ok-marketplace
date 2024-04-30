@@ -18,27 +18,24 @@ fun ICorChainDsl<MkplContext>.repoOffers(title: String) = worker {
     handle {
         val adRequest = adRepoPrepare
         val filter = DbAdFilterRequest(
-            titleFilter = adRequest.title,
+            // Здесь должен быть более умный поиск. Такой примитив слишком плохо работает
+            // titleFilter = adRequest.title,
             dealSide = when (adRequest.adType) {
                 MkplDealSide.DEMAND -> MkplDealSide.SUPPLY
                 MkplDealSide.SUPPLY -> MkplDealSide.DEMAND
-                MkplDealSide.NONE -> MkplDealSide.NONE
-            }
-        )
-        val dbResponse = if (filter.dealSide == MkplDealSide.NONE) {
-            DbAdsResponseErr(
-                errors = listOf(
-                    MkplError(
-                        field = "adType",
-                        message = "Type of ad must not be empty"
+                MkplDealSide.NONE -> {
+                    fail(
+                        MkplError(
+                            field = "adType",
+                            message = "Type of ad must not be empty"
+                        )
                     )
-                )
-            )
-        } else {
-            adRepo.searchAd(filter)
-        }
+                    return@handle
+                }
+            },
+        )
 
-        when (dbResponse) {
+        when (val dbResponse = adRepo.searchAd(filter)) {
             is DbAdsResponseOk -> adsRepoDone = dbResponse.data.toMutableList()
             is DbAdsResponseErr -> fail(dbResponse.errors)
         }
