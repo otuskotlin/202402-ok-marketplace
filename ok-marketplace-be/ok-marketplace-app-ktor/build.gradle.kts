@@ -75,7 +75,6 @@ kotlin {
                 implementation(libs.ktor.serialization.json)
 
                 // DB
-                implementation(projects.okMarketplaceRepoCommon)
                 implementation(projects.okMarketplaceRepoStubs)
                 implementation(projects.okMarketplaceRepoInmemory)
 
@@ -92,6 +91,9 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+
+                // DB
+                implementation(projects.okMarketplaceRepoCommon)
 
                 implementation(libs.ktor.server.test)
                 implementation(libs.ktor.client.negotiation)

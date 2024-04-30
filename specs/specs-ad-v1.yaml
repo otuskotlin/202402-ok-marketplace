@@ -317,6 +317,10 @@ components:
         searchString:
           type: string
           description: Поисковая строка, которая будет искаться в объявлениях
+        ownerId:
+          $ref: '#/components/schemas/UserId'
+        adType:
+          $ref: '#/components/schemas/DealSide'
 
     AdSearchRequest:
       allOf:
