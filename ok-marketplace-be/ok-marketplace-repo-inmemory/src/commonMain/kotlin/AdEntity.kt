@@ -19,6 +19,7 @@ data class AdEntity(
         adType = model.adType.takeIf { it != MkplDealSide.NONE }?.name,
         visibility = model.visibility.takeIf { it != MkplVisibility.NONE }?.name,
         lock = model.lock.asString().takeIf { it.isNotBlank() }
+        // Не нужно сохранять permissions, потому что он ВЫЧИСЛЯЕМЫЙ, а не хранимый
     )
 
     fun toInternal() = MkplAd(
