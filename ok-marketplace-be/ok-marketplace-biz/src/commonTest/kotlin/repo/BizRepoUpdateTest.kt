@@ -52,7 +52,7 @@ class BizRepoUpdateTest {
             description = "xyz",
             adType = MkplDealSide.DEMAND,
             visibility = MkplVisibility.VISIBLE_TO_GROUP,
-            lock = MkplAdLock("123-234-abc-ABC"),
+            lock = MkplAdLock("123"),
         )
         val ctx = MkplContext(
             command = command,

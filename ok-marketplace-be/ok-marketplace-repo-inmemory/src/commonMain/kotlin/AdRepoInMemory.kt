@@ -7,7 +7,6 @@ import kotlinx.coroutines.sync.withLock
 import ru.otus.otuskotlin.marketplace.common.helpers.errorSystem
 import ru.otus.otuskotlin.marketplace.common.models.*
 import ru.otus.otuskotlin.marketplace.common.repo.*
-import ru.otus.otuskotlin.marketplace.common.repo.exceptions.RepoEmptyLockException
 import ru.otus.otuskotlin.marketplace.repo.common.IRepoAdInitializable
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -31,7 +30,7 @@ class AdRepoInMemory(
 
     override suspend fun createAd(rq: DbAdRequest): IDbAdResponse = tryAdMethod {
         val key = randomUuid()
-        val ad = rq.ad.copy(id = MkplAdId(key), lock = MkplAdLock(randomUuid()))
+        val ad = rq.ad.copy(id = MkplAdId(key))
         val entity = AdEntity(ad)
         mutex.withLock {
             cache.put(key, entity)
@@ -53,16 +52,13 @@ class AdRepoInMemory(
         val rqAd = rq.ad
         val id = rqAd.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
         val key = id.asString()
-        val oldLock = rqAd.lock.takeIf { it != MkplAdLock.NONE } ?: return errorEmptyLock(id)
 
         mutex.withLock {
             val oldAd = cache.get(key)?.toInternal()
             when {
                 oldAd == null -> errorNotFound(id)
-                oldAd.lock == MkplAdLock.NONE -> errorDb(RepoEmptyLockException(id))
-                oldAd.lock != oldLock -> errorRepoConcurrency(oldAd, oldLock)
                 else -> {
-                    val newAd = rqAd.copy(lock = MkplAdLock(randomUuid()))
+                    val newAd = rqAd.copy()
                     val entity = AdEntity(newAd)
                     cache.put(key, entity)
                     DbAdResponseOk(newAd)
@@ -75,14 +71,11 @@ class AdRepoInMemory(
     override suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse = tryAdMethod {
         val id = rq.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
         val key = id.asString()
-        val oldLock = rq.lock.takeIf { it != MkplAdLock.NONE } ?: return errorEmptyLock(id)
 
         mutex.withLock {
             val oldAd = cache.get(key)?.toInternal()
             when {
                 oldAd == null -> errorNotFound(id)
-                oldAd.lock == MkplAdLock.NONE -> errorDb(RepoEmptyLockException(id))
-                oldAd.lock != oldLock -> errorRepoConcurrency(oldAd, oldLock)
                 else -> {
                     cache.invalidate(key)
                     DbAdResponseOk(oldAd)

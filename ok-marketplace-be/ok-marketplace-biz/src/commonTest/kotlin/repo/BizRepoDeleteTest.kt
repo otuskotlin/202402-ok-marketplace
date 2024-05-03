@@ -24,7 +24,6 @@ class BizRepoDeleteTest {
         ownerId = userId,
         adType = MkplDealSide.DEMAND,
         visibility = MkplVisibility.VISIBLE_PUBLIC,
-        lock = MkplAdLock("123-234-abc-ABC"),
     )
     private val repo = AdRepositoryMock(
         invokeReadAd = {
@@ -51,7 +50,7 @@ class BizRepoDeleteTest {
     fun repoDeleteSuccessTest() = runTest {
         val adToUpdate = MkplAd(
             id = MkplAdId("123"),
-            lock = MkplAdLock("123-234-abc-ABC"),
+            lock = MkplAdLock("123"),
         )
         val ctx = MkplContext(
             command = command,

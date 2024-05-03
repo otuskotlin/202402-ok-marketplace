@@ -26,8 +26,7 @@ internal abstract class AdRepoBaseV2Test {
         prepareCtx(MkplAdStub.prepareResult {
             id = MkplAdId(uuidNew)
             ownerId = MkplUserId.NONE
-            lock = MkplAdLock(uuidNew)
-//            lock = MkplAdLock.NONE
+            lock = MkplAdLock.NONE
         })
             .toTransportCreate()
     )
@@ -50,10 +49,7 @@ internal abstract class AdRepoBaseV2Test {
             ad = MkplAdStub.prepareResult { title = "add" }.toTransportUpdate(),
             debug = debug,
         ),
-        prepareCtx(MkplAdStub.prepareResult {
-            title = "add"
-            lock = MkplAdLock(uuidNew)
-        })
+        prepareCtx(MkplAdStub.prepareResult { title = "add" })
             .toTransportUpdate()
     )
 
