@@ -18,6 +18,8 @@ kermit = "2.0.3"
 ktor = "2.3.9"
 spring-boot = "3.2.0"
 
+liquibase = "4.27.0"
+
 # Docker
 testcontainers = "1.19.7"
 muschko = "9.4.0"
@@ -83,6 +85,12 @@ kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
 # Databases
 db-cache4k = "io.github.reactivecircus.cache4k:cache4k:0.13.0"
+db-postgres = "org.postgresql:postgresql:42.7.3"
+
+# Liquidbase
+liquibase-core = {module = "org.liquibase:liquibase-core", version.ref = "liquibase"}
+liquibase-picocli = "info.picocli:picocli:4.7.5"
+liquibase-snakeyml = "org.yaml:snakeyaml:1.33"
 
 # Testing
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
@@ -93,6 +101,7 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }
+testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-datatest", "kotest-property"]
@@ -104,6 +113,7 @@ openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-gener
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.2.0" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 shadowJar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+liquibase = { id = "org.liquibase.gradle", version = "2.2.2" }
 
 # Spring
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
