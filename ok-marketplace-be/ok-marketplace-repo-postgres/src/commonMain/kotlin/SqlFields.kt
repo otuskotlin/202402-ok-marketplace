@@ -10,9 +10,11 @@ object SqlFields {
     val OWNER_ID = "owner_id"
     val PRODUCT_ID = "product_id"
 
+    val AD_TYPE_TYPE = "ad_types_type"
     val AD_TYPE_DEMAND = "demand"
     val AD_TYPE_SUPPLY = "supply"
 
+    val VISIBILITY_TYPE = "ad_visibilities_type"
     val VISIBILITY_PUBLIC = "public"
     val VISIBILITY_OWNER = "owner"
     val VISIBILITY_GROUP = "group"

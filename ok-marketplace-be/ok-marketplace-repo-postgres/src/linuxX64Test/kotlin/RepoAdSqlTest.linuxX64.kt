@@ -12,9 +12,7 @@ class RepoAdSqlTest {
     @OptIn(ExperimentalForeignApi::class)
     @Test
     fun create() = runTest {
-        println("GETTING PORT")
         val pgPort = getenv("postgresPort")?.toKString()?.toIntOrNull() ?: 5432
-        println("PORT GOT: $pgPort")
 
         val repo = RepoAdSql(
             properties = SqlProperties(port = pgPort)

@@ -2,7 +2,12 @@ import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 import com.github.dockerjava.api.command.InspectContainerResponse
 import com.github.dockerjava.api.model.ExposedPort
+import com.github.dockerjava.api.model.Frame
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
+import org.testcontainers.containers.PostgreSQLContainer
+import org.testcontainers.containers.wait.strategy.Wait
+import java.time.Duration
+import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
     id("build-kmp")
@@ -12,6 +17,16 @@ plugins {
 repositories {
     google()
     mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        "classpath"(libs.testcontainers.postgres)
+        "classpath"(libs.db.postgres)
+    }
 }
 
 kotlin {
@@ -35,6 +50,9 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
+                implementation(libs.db.postgres)
+//                implementation(libs.db.hikari)
+                implementation(libs.bundles.exposed)
             }
         }
         jvmTest {
@@ -61,13 +79,20 @@ dependencies {
     liquibaseRuntime(libs.liquibase.picocli)
     liquibaseRuntime(libs.liquibase.snakeyml)
     liquibaseRuntime(libs.db.postgres)
-    liquibaseRuntime(libs.testcontainers.postgres)
 }
 
 var pgPort = 5432
 val pgDbName = "marketplace_ads"
 val pgUsername = "postgres"
 val pgPassword = "marketplace-pass"
+val containerStarted = AtomicBoolean(false)
+val pgContainer = PostgreSQLContainer<Nothing>("postgres:latest").apply {
+    withUsername(pgUsername)
+    withPassword(pgPassword)
+    withDatabaseName(pgDbName)
+    this.startupCheckStrategy
+//    waitingFor(Wait.forLogMessage("database system is ready to accept connections", 1))
+}
 
 tasks {
     // Здесь в тасках запускаем PotgreSQL в контейнере
@@ -112,9 +137,41 @@ tasks {
             }
         )
     }
-    val liquibaseUpdate = getByName("update") {
+    val waitingPg by creating(DockerLogsContainer::class) {
         dependsOn(inspectPg)
+        finalizedBy(stopPg)
+        targetContainerId(dbContainer.containerId)
+        tailAll = true
+        follow = true
+        onNext {
+            object : Action<Frame> {
+                override fun execute(container: Frame) {
+                    println("CLAZZ: ${container.toString()}")
+
+                }
+            }
+        }
+    }
+    val pgStop by creating {
         doFirst {
+            pgContainer.stop()
+        }
+    }
+    val pgStart by creating {
+        finalizedBy(pgStop)
+        doFirst {
+            pgContainer.start()
+        }
+    }
+    val liquibaseUpdate = getByName("update") {
+//        dependsOn(inspectPg)
+//        finalizedBy(stopPg)
+        dependsOn(pgStart)
+        finalizedBy(pgStop)
+        doFirst {
+            println("waiting for a while ${System.currentTimeMillis()/1000000}")
+            Thread.sleep(30000)
+            println("LQB: \"jdbc:postgresql://localhost:$pgPort/$pgDbName\" ${System.currentTimeMillis()/1000000}")
             liquibase {
                 activities {
                     register("main") {
@@ -122,7 +179,8 @@ tasks {
                             "logLevel" to "info",
                             "searchPath" to layout.projectDirectory.dir("migrations").asFile.toString(),
                             "changelogFile" to "changelog-v0.0.1.sql",
-                            "url" to "jdbc:postgresql://localhost:$pgPort/$pgDbName",
+//                            "url" to "jdbc:postgresql://localhost:$pgPort/$pgDbName",
+                            "url" to pgContainer.jdbcUrl,
                             "username" to pgUsername,
                             "password" to pgPassword,
                             "driver" to "org.postgresql.Driver"
@@ -131,12 +189,15 @@ tasks {
                 }
             }
         }
-        finalizedBy(stopPg)
     }
     val waitPg by creating(DockerWaitContainer::class) {
+        dependsOn(inspectPg)
         dependsOn(liquibaseUpdate)
         containerId.set(startPg.containerId)
         finalizedBy(stopPg)
+        doFirst {
+            println("PORT: $pgPort")
+        }
     }
     withType(KotlinNativeTest::class).configureEach {
         dependsOn(liquibaseUpdate)

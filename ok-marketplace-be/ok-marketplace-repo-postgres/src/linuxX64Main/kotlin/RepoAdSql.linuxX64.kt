@@ -3,14 +3,16 @@ package ru.otus.otuskotlin.marketplace.backend.repo.postgresql
 import io.github.moreirasantos.pgkn.PostgresDriver
 import io.github.moreirasantos.pgkn.resultset.ResultSet
 import ru.otus.otuskotlin.marketplace.backend.repo.postgresql.SqlFields.quoted
+import ru.otus.otuskotlin.marketplace.common.models.MkplAd
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
 import ru.otus.otuskotlin.marketplace.common.repo.*
+import ru.otus.otuskotlin.marketplace.repo.common.IRepoAdInitializable
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class RepoAdSql actual constructor(
     properties: SqlProperties,
     val randomUuid: () -> String,
-) : IRepoAd {
+) : IRepoAd, IRepoAdInitializable {
     init {
         require(properties.database.matches(Regex("^[\\w\\d_]+\$"))) {
             "PostgreSQL database must contain only letters, numbers and underscore symbol '_'"
@@ -35,6 +37,10 @@ actual class RepoAdSql actual constructor(
         )
     }
 
+    actual override fun save(ads: Collection<MkplAd>): Collection<MkplAd> {
+        TODO("Not yet implemented")
+    }
+
     actual override suspend fun createAd(rq: DbAdRequest): IDbAdResponse {
         val saveAd = rq.ad.copy(id = MkplAdId(randomUuid()))
         val sql = """
@@ -51,8 +57,8 @@ actual class RepoAdSql actual constructor(
                   :${SqlFields.ID}, 
                   :${SqlFields.TITLE}, 
                   :${SqlFields.DESCRIPTION}, 
-                  :${SqlFields.VISIBILITY}::"VISIBILITY", 
-                  :${SqlFields.AD_TYPE}::"AD_TYPES", 
+                  :${SqlFields.VISIBILITY}::${SqlFields.VISIBILITY_TYPE}, 
+                  :${SqlFields.AD_TYPE}::${SqlFields.AD_TYPE_TYPE}, 
                   :${SqlFields.LOCK}, 
                   :${SqlFields.OWNER_ID}, 
                   :${SqlFields.PRODUCT_ID}
