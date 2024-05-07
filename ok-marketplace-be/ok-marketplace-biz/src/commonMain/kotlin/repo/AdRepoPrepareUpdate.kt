@@ -16,6 +16,7 @@ fun ICorChainDsl<MkplContext>.repoPrepareUpdate(title: String) = worker {
             description = adValidated.description
             adType = adValidated.adType
             visibility = adValidated.visibility
+            lock = adValidated.lock
         }
     }
 }
