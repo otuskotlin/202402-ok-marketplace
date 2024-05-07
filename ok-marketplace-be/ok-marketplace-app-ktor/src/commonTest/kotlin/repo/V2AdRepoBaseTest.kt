@@ -102,6 +102,7 @@ abstract class V2AdRepoBaseTest {
             assertEquals(ad.description, responseObj.ad?.description)
             assertEquals(ad.adType, responseObj.ad?.adType)
             assertEquals(ad.visibility, responseObj.ad?.visibility)
+            assertEquals(uuidNew, responseObj.ad?.lock)
         }
     }
     @Test
