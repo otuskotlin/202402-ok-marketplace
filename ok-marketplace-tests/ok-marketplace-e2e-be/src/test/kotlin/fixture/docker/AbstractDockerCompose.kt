@@ -28,14 +28,13 @@ abstract class AbstractDockerCompose(
 
     private val compose =
         DockerComposeContainer(getComposeFile()).apply {
-            withOptions("--compatibility")
+//            withOptions("--compatibility")
             apps.forEach { (service, port) ->
                 withExposedService(
                     service,
                     port,
                 )
             }
-            withLocalCompose(true)
         }
 
     override fun start() {

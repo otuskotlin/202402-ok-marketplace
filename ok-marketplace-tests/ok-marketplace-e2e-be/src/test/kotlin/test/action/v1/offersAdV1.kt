@@ -6,12 +6,12 @@ import io.kotest.matchers.should
 import ru.otus.otuskotlin.marketplace.api.v1.models.*
 import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
 
-suspend fun Client.offersAd(id: String?): AdOffersResponse = offersAd(id) {
+suspend fun Client.offersAd(id: String?, debug: AdDebug = debugStubV1): AdOffersResponse = offersAd(id, debug = debug) {
     it should haveSuccessResult
     it
 }
 
-suspend fun <T> Client.offersAd(id: String?, block: (AdOffersResponse) -> T): T =
+suspend fun <T> Client.offersAd(id: String?, debug: AdDebug = debugStubV1, block: (AdOffersResponse) -> T): T =
     withClue("searchOffersV1: $id") {
         val response = sendAndReceive(
             "ad/offers",

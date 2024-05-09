@@ -9,7 +9,7 @@ import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidId
 import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidLock
 import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
 
-suspend fun Client.deleteAd(ad: AdResponseObject) {
+suspend fun Client.deleteAd(ad: AdResponseObject, debug: AdDebug = debugStubV1) {
     val id = ad.id
     val lock = ad.lock
     withClue("deleteAdV2: $id, lock: $lock") {

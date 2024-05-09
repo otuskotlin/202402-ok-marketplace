@@ -2,11 +2,7 @@ import com.bmuschko.gradle.docker.tasks.container.*
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 import com.github.dockerjava.api.command.InspectContainerResponse
 import com.github.dockerjava.api.model.ExposedPort
-import com.github.dockerjava.api.model.Frame
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
-import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.containers.wait.strategy.Wait
-import java.time.Duration
 import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
@@ -19,16 +15,6 @@ repositories {
     google()
     mavenCentral()
 }
-
-//buildscript {
-//    repositories {
-//        mavenCentral()
-//    }
-//    dependencies {
-//        "classpath"(libs.testcontainers.postgres)
-//        "classpath"(libs.db.postgres)
-//    }
-//}
 
 kotlin {
     sourceSets {
@@ -88,14 +74,6 @@ val pgDbName = "marketplace_ads"
 val pgUsername = "postgres"
 val pgPassword = "marketplace-pass"
 val containerStarted = AtomicBoolean(false)
-//val pgContainer = PostgreSQLContainer<Nothing>("postgres:latest").apply {
-//    withUsername(pgUsername)
-//    withPassword(pgPassword)
-//    withDatabaseName(pgDbName)
-//    this.startupCheckStrategy
-////    waitingFor(Wait.forLogMessage("database system is ready to accept connections", 1))
-//}
-
 
 tasks {
     // Здесь в тасках запускаем PotgreSQL в контейнере
@@ -149,8 +127,6 @@ tasks {
         group = taskGroup
         dependsOn(inspectPg)
         finalizedBy(stopPg)
-//        dependsOn(pgStart)
-//        finalizedBy(pgStop)
         doFirst {
             println("waiting for a while ${System.currentTimeMillis()/1000000}")
             Thread.sleep(30000)
@@ -163,7 +139,6 @@ tasks {
                             "searchPath" to layout.projectDirectory.dir("migrations").asFile.toString(),
                             "changelogFile" to "changelog-v0.0.1.sql",
                             "url" to "jdbc:postgresql://localhost:$pgPort/$pgDbName",
-//                            "url" to pgStart.get().pgUrl,
                             "username" to pgUsername,
                             "password" to pgPassword,
                             "driver" to "org.postgresql.Driver"

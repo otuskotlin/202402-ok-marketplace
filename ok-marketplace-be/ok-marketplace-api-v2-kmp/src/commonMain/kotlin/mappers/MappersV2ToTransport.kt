@@ -50,7 +50,8 @@ fun MkplContext.toTransportSearch() = AdSearchResponse(
 fun MkplContext.toTransportOffers() = AdOffersResponse(
     result = state.toResult(),
     errors = errors.toTransportErrors(),
-    ads = adsResponse.toTransportAd()
+    ad = adResponse.toTransportAd(),
+    ads = adsResponse.toTransportAd(),
 )
 
 fun MkplContext.toTransportInit() = AdInitResponse(

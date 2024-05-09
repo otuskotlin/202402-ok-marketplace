@@ -15,7 +15,7 @@ actual class RepoAdSql actual constructor(
     properties: SqlProperties,
     private val randomUuid: () -> String
 ) : IRepoAd, IRepoAdInitializable {
-    private val adTable = AdTable(properties.table)
+    private val adTable = AdTable("${properties.schema}.${properties.table}")
 
     private val driver = when {
         properties.url.startsWith("jdbc:postgresql://") -> "org.postgresql.Driver"
