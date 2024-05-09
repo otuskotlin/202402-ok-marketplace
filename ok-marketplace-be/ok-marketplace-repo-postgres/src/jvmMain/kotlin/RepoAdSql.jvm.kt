@@ -22,31 +22,36 @@ actual class RepoAdSql actual constructor(
         else -> throw IllegalArgumentException("Unknown driver for url ${properties.url}")
     }
 
-    private val conn = Database.connect(
+    val conn = Database.connect(
         properties.url, driver, properties.user, properties.password
     )
 
-    private fun saveObj(ad: MkplAd): MkplAd {
+    actual fun clear(): Unit = transaction(conn) {
+        adTable.deleteAll()
+    }
+
+    private fun saveObj(ad: MkplAd): MkplAd = transaction(conn) {
         val res = adTable
             .insert {
                 to(it, ad, randomUuid)
             }
             .resultedValues
             ?.map { adTable.from(it) }
-        return res?.first() ?: throw RuntimeException("BD error: insert statement returned empty result")
+        res?.first() ?: throw RuntimeException("BD error: insert statement returned empty result")
     }
 
-    private suspend fun <T> transactionWrapper(block: () -> T, handle: (Exception) -> T): T = withContext(Dispatchers.IO) {
-        try {
-            transaction(conn) {
-                block()
+    private suspend inline fun <T> transactionWrapper(crossinline block: () -> T, crossinline handle: (Exception) -> T): T =
+        withContext(Dispatchers.IO) {
+            try {
+                transaction(conn) {
+                    block()
+                }
+            } catch (e: Exception) {
+                handle(e)
             }
-        } catch (e: Exception) {
-            handle(e)
         }
-    }
 
-    private suspend fun transactionWrapper(block: () -> IDbAdResponse): IDbAdResponse =
+    private suspend inline fun transactionWrapper(crossinline block: () -> IDbAdResponse): IDbAdResponse =
         transactionWrapper(block) { DbAdResponseErr(it.asMkplError()) }
 
     actual override fun save(ads: Collection<MkplAd>): Collection<MkplAd> = ads.map { saveObj(it) }

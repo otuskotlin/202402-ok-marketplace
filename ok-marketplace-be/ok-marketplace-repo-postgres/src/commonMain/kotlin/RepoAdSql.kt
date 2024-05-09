@@ -16,4 +16,5 @@ expect class RepoAdSql(
     override suspend fun updateAd(rq: DbAdRequest): IDbAdResponse
     override suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse
     override suspend fun searchAd(rq: DbAdFilterRequest): IDbAdsResponse
+    fun clear()
 }

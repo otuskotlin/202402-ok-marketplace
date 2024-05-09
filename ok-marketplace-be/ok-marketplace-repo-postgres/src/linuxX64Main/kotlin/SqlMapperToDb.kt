@@ -2,10 +2,13 @@ package ru.otus.otuskotlin.marketplace.backend.repo.postgresql
 
 import ru.otus.otuskotlin.marketplace.common.models.*
 
-private fun String.toDb() = this.takeIf { it.isNotBlank() }
+private fun String.toDb() = this.takeIf { it.isNotBlank() } // ?: "NULL"
 
-internal fun MkplAd.toDb() = mapOf(
-    SqlFields.ID to id.asString().toDb(),
+internal fun MkplAdId.toDb() = mapOf(
+    SqlFields.ID to asString().toDb(),
+)
+
+internal fun MkplAd.toDb() = id.toDb() + mapOf(
     SqlFields.TITLE to title.toDb(),
     SqlFields.DESCRIPTION to description.toDb(),
     SqlFields.OWNER_ID to ownerId.asString().toDb(),

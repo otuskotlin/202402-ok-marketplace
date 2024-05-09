@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 plugins {
     id("build-kmp")
+//    id("build-pgContainer")
     alias(libs.plugins.muschko.remote)
     alias(libs.plugins.liquibase)
 }
@@ -19,15 +20,15 @@ repositories {
     mavenCentral()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        "classpath"(libs.testcontainers.postgres)
-        "classpath"(libs.db.postgres)
-    }
-}
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        "classpath"(libs.testcontainers.postgres)
+//        "classpath"(libs.db.postgres)
+//    }
+//}
 
 kotlin {
     sourceSets {
@@ -82,17 +83,19 @@ dependencies {
 }
 
 var pgPort = 5432
+val taskGroup = "pgContainer"
 val pgDbName = "marketplace_ads"
 val pgUsername = "postgres"
 val pgPassword = "marketplace-pass"
 val containerStarted = AtomicBoolean(false)
-val pgContainer = PostgreSQLContainer<Nothing>("postgres:latest").apply {
-    withUsername(pgUsername)
-    withPassword(pgPassword)
-    withDatabaseName(pgDbName)
-    this.startupCheckStrategy
-//    waitingFor(Wait.forLogMessage("database system is ready to accept connections", 1))
-}
+//val pgContainer = PostgreSQLContainer<Nothing>("postgres:latest").apply {
+//    withUsername(pgUsername)
+//    withPassword(pgPassword)
+//    withDatabaseName(pgDbName)
+//    this.startupCheckStrategy
+////    waitingFor(Wait.forLogMessage("database system is ready to accept connections", 1))
+//}
+
 
 tasks {
     // Здесь в тасках запускаем PotgreSQL в контейнере
@@ -100,9 +103,11 @@ tasks {
     // Передаем настройки в среду тестирования
     val postgresImage = "postgres:latest"
     val pullImage by creating(DockerPullImage::class) {
+        group = taskGroup
         image.set(postgresImage)
     }
     val dbContainer by creating(DockerCreateContainer::class) {
+        group = taskGroup
         dependsOn(pullImage)
         targetImageId(pullImage.image)
         withEnvVar("POSTGRES_PASSWORD", pgPassword)
@@ -114,14 +119,17 @@ tasks {
         hostConfig.autoRemove.set(true)
     }
     val stopPg by creating(DockerStopContainer::class) {
+        group = taskGroup
         targetContainerId(dbContainer.containerId)
     }
     val startPg by creating(DockerStartContainer::class) {
+        group = taskGroup
         dependsOn(dbContainer)
         targetContainerId(dbContainer.containerId)
         finalizedBy(stopPg)
     }
     val inspectPg by creating(DockerInspectContainer::class) {
+        group = taskGroup
         dependsOn(startPg)
         finalizedBy(stopPg)
         targetContainerId(dbContainer.containerId)
@@ -137,37 +145,12 @@ tasks {
             }
         )
     }
-    val waitingPg by creating(DockerLogsContainer::class) {
+    val liquibaseUpdate = getByName("update") {
+        group = taskGroup
         dependsOn(inspectPg)
         finalizedBy(stopPg)
-        targetContainerId(dbContainer.containerId)
-        tailAll = true
-        follow = true
-        onNext {
-            object : Action<Frame> {
-                override fun execute(container: Frame) {
-                    println("CLAZZ: ${container.toString()}")
-
-                }
-            }
-        }
-    }
-    val pgStop by creating {
-        doFirst {
-            pgContainer.stop()
-        }
-    }
-    val pgStart by creating {
-        finalizedBy(pgStop)
-        doFirst {
-            pgContainer.start()
-        }
-    }
-    val liquibaseUpdate = getByName("update") {
-//        dependsOn(inspectPg)
-//        finalizedBy(stopPg)
-        dependsOn(pgStart)
-        finalizedBy(pgStop)
+//        dependsOn(pgStart)
+//        finalizedBy(pgStop)
         doFirst {
             println("waiting for a while ${System.currentTimeMillis()/1000000}")
             Thread.sleep(30000)
@@ -179,8 +162,8 @@ tasks {
                             "logLevel" to "info",
                             "searchPath" to layout.projectDirectory.dir("migrations").asFile.toString(),
                             "changelogFile" to "changelog-v0.0.1.sql",
-//                            "url" to "jdbc:postgresql://localhost:$pgPort/$pgDbName",
-                            "url" to pgContainer.jdbcUrl,
+                            "url" to "jdbc:postgresql://localhost:$pgPort/$pgDbName",
+//                            "url" to pgStart.get().pgUrl,
                             "username" to pgUsername,
                             "password" to pgPassword,
                             "driver" to "org.postgresql.Driver"
@@ -191,6 +174,7 @@ tasks {
         }
     }
     val waitPg by creating(DockerWaitContainer::class) {
+        group = taskGroup
         dependsOn(inspectPg)
         dependsOn(liquibaseUpdate)
         containerId.set(startPg.containerId)

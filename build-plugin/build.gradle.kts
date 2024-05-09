@@ -34,5 +34,7 @@ dependencies {
     implementation(libs.plugin.binaryCompatibilityValidator)
 
     implementation(libs.testcontainers.postgres)
+    implementation(libs.testcontainers.core)
     implementation(libs.db.postgres)
+//    implementation("com.github.docker-java:docker-java-core:3.3.6")
 }

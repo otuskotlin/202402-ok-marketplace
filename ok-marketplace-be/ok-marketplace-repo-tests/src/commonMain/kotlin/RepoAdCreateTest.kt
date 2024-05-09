@@ -27,10 +27,15 @@ abstract class RepoAdCreateTest {
         val result = repo.createAd(DbAdRequest(createObj))
         assertIs<DbAdResponseOk>(result)
         val expected = createObj.copy(id = result.data.id)
+        println("EXPECTED: $expected\nACT: ${result.data}")
         assertEquals(expected.title, result.data.title)
         assertEquals(expected.description, result.data.description)
         assertEquals(expected.adType, result.data.adType)
+        assertEquals(expected.adType, result.data.adType)
         assertNotEquals(MkplAdId.NONE, result.data.id)
+        assertEquals(lockNew, result.data.lock)
+        assertEquals(expected.ownerId, result.data.ownerId)
+        assertEquals(expected.productId, result.data.productId)
     }
 
     companion object : BaseInitAds("create") {

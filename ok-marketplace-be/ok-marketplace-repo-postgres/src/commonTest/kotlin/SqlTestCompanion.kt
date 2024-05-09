@@ -9,7 +9,6 @@ object SqlTestCompanion {
     private const val HOST = "localhost"
     private const val USER = "postgres"
     private const val PASS = "marketplace-pass"
-    private const val SCHEMA = "marketplace"
     private val PORT = getEnv("postgresPort")?.toIntOrNull() ?: 5432
 
     fun repoUnderTestContainer(
@@ -22,9 +21,7 @@ object SqlTestCompanion {
                 host = HOST,
                 user = USER,
                 password = PASS,
-                schema = SCHEMA,
                 port = PORT,
-                table = "ads-$test",
             ),
             randomUuid = randomUuid
         ),

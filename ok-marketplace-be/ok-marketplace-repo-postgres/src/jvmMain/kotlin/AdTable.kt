@@ -3,7 +3,6 @@ package ru.otus.otuskotlin.marketplace.backend.repo.postgresql
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
-import ru.otus.otuskotlin.marketplace.backend.repo.postgresql.SqlFields.quoted
 import ru.otus.otuskotlin.marketplace.common.models.*
 
 class AdTable(tableName: String) : Table(tableName) {
@@ -41,48 +40,4 @@ class AdTable(tableName: String) : Table(tableName) {
     }
 
 }
-
-fun Table.adTypeEnumeration(
-    columnName: String
-) = customEnumeration(
-    name = columnName,
-    sql = SqlFields.AD_TYPE_TYPE,
-    fromDb = { value ->
-        when (value) {
-            SqlFields.AD_TYPE_DEMAND -> MkplDealSide.DEMAND
-            SqlFields.AD_TYPE_SUPPLY -> MkplDealSide.SUPPLY
-            else -> MkplDealSide.NONE
-        }
-    },
-    toDb = { value ->
-        when (value) {
-            MkplDealSide.DEMAND -> SqlFields.AD_TYPE_DEMAND
-            MkplDealSide.SUPPLY -> SqlFields.AD_TYPE_SUPPLY
-            MkplDealSide.NONE -> throw Exception("Wrong value of Ad Type. NONE is unsupported")
-        }
-    }
-)
-
-fun Table.visibilityEnumeration(
-    columnName: String
-) = customEnumeration(
-    name = columnName,
-    sql = SqlFields.VISIBILITY_TYPE,
-    fromDb = { value ->
-        when (value) {
-            SqlFields.VISIBILITY_OWNER -> MkplVisibility.VISIBLE_TO_OWNER
-            SqlFields.VISIBILITY_GROUP -> MkplVisibility.VISIBLE_TO_GROUP
-            SqlFields.VISIBILITY_PUBLIC -> MkplVisibility.VISIBLE_PUBLIC
-            else -> MkplVisibility.NONE
-        }
-    },
-    toDb = { value ->
-        when (value) {
-            MkplVisibility.VISIBLE_TO_OWNER -> SqlFields.VISIBILITY_OWNER
-            MkplVisibility.VISIBLE_TO_GROUP -> SqlFields.VISIBILITY_GROUP
-            MkplVisibility.VISIBLE_PUBLIC -> SqlFields.VISIBILITY_PUBLIC
-            MkplVisibility.NONE -> throw Exception("Wrong value of Visibility. NONE is unsupported")
-        }
-    }
-)
 
