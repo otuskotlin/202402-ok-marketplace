@@ -1,11 +1,15 @@
 package ru.otus.otuskotlin.marketplace.backend.repo.postgresql
 
 import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.repo.DbAdFilterRequest
 
-private fun String.toDb() = this.takeIf { it.isNotBlank() } // ?: "NULL"
+private fun String.toDb() = this.takeIf { it.isNotBlank() }
 
 internal fun MkplAdId.toDb() = mapOf(
     SqlFields.ID to asString().toDb(),
+)
+internal fun MkplAdLock.toDb() = mapOf(
+    SqlFields.LOCK_OLD to asString().toDb(),
 )
 
 internal fun MkplAd.toDb() = id.toDb() + mapOf(
@@ -16,6 +20,12 @@ internal fun MkplAd.toDb() = id.toDb() + mapOf(
     SqlFields.VISIBILITY to visibility.toDb(),
     SqlFields.PRODUCT_ID to productId.asString().toDb(),
     SqlFields.LOCK to lock.asString().toDb(),
+)
+
+internal fun DbAdFilterRequest.toDb() = mapOf(
+    SqlFields.FILTER_TITLE to titleFilter.toDb(),
+    SqlFields.FILTER_AD_TYPE to dealSide.toDb(),
+    SqlFields.FILTER_OWNER_ID to ownerId.asString().toDb(),
 )
 
 private fun MkplDealSide.toDb() = when (this) {

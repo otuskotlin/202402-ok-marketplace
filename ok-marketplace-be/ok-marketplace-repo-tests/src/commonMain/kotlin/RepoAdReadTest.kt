@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.marketplace.backend.repo.tests
 
 import ru.otus.otuskotlin.marketplace.common.models.MkplAd
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
+import ru.otus.otuskotlin.marketplace.common.models.MkplError
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdIdRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseErr
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseOk
@@ -25,14 +26,17 @@ abstract class RepoAdReadTest {
 
     @Test
     fun readNotFound() = runRepoTest {
+        println("REQUESTING")
         val result = repo.readAd(DbAdIdRequest(notFoundId))
+        println("RESULT: $result")
 
         assertIs<DbAdResponseErr>(result)
-        val error = result.errors.find { it.code == "repo-not-found" }
+        println("ERRORS: ${result.errors}")
+        val error: MkplError? = result.errors.find { it.code == "repo-not-found" }
         assertEquals("id", error?.field)
     }
 
-    companion object : BaseInitAds("delete") {
+    companion object : BaseInitAds("read") {
         override val initObjects: List<MkplAd> = listOf(
             createInitTestModel("read")
         )

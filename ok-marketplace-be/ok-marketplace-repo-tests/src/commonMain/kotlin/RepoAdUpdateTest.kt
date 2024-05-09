@@ -50,6 +50,8 @@ abstract class RepoAdUpdateTest {
     @Test
     fun updateSuccess() = runRepoTest {
         val result = repo.updateAd(DbAdRequest(reqUpdateSucc))
+        println("ERRORS: ${(result as? DbAdResponseErr)?.errors}")
+        println("ERRORSWD: ${(result as? DbAdResponseErrWithData)?.errors}")
         assertIs<DbAdResponseOk>(result)
         assertEquals(reqUpdateSucc.id, result.data.id)
         assertEquals(reqUpdateSucc.title, result.data.title)

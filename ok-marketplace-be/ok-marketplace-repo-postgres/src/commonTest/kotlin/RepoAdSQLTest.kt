@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.marketplace.backend.repo.postgresql
 import ru.otus.otuskotlin.marketplace.backend.repo.tests.*
 import ru.otus.otuskotlin.marketplace.common.repo.IRepoAd
 import ru.otus.otuskotlin.marketplace.repo.common.AdRepoInitialized
+import ru.otus.otuskotlin.marketplace.repo.common.IRepoAdInitializable
 import kotlin.test.AfterTest
 
 private fun IRepoAd.clear() {
@@ -11,12 +12,25 @@ private fun IRepoAd.clear() {
 }
 
 class RepoAdSQLCreateTest : RepoAdCreateTest() {
+    override val repo: IRepoAdInitializable = SqlTestCompanion.repoUnderTestContainer(
+        initObjects,
+        randomUuid = { uuidNew.asString() },
+    )
+    @AfterTest
+    fun tearDown() = repo.clear()
+}
+
+class RepoAdSQLReadTest : RepoAdReadTest() {
+    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(initObjects)
+    @AfterTest
+    fun tearDown() = repo.clear()
+}
+
+class RepoAdSQLUpdateTest : RepoAdUpdateTest() {
     override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(
-        "create",
         initObjects,
         randomUuid = { lockNew.asString() },
     )
-
     @AfterTest
     fun tearDown() {
         repo.clear()
@@ -24,46 +38,13 @@ class RepoAdSQLCreateTest : RepoAdCreateTest() {
 }
 
 class RepoAdSQLDeleteTest : RepoAdDeleteTest() {
-    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(
-        "delete",
-        initObjects
-    )
+    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(initObjects)
     @AfterTest
-    fun tearDown() {
-        repo.clear()
-    }
-}
-
-class RepoAdSQLReadTest : RepoAdReadTest() {
-    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(
-        "read",
-        initObjects
-    )
-    @AfterTest
-    fun tearDown() {
-        repo.clear()
-    }
+    fun tearDown() = repo.clear()
 }
 
 class RepoAdSQLSearchTest : RepoAdSearchTest() {
-    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(
-        "search",
-        initObjects
-    )
+    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(initObjects)
     @AfterTest
-    fun tearDown() {
-        repo.clear()
-    }
-}
-
-class RepoAdSQLUpdateTest : RepoAdUpdateTest() {
-    override val repo: IRepoAd = SqlTestCompanion.repoUnderTestContainer(
-        "update",
-        initObjects,
-        randomUuid = { lockNew.asString() },
-    )
-    @AfterTest
-    fun tearDown() {
-        repo.clear()
-    }
+    fun tearDown() = repo.clear()
 }
