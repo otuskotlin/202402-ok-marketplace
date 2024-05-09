@@ -32,7 +32,7 @@ abstract class RepoAdReadTest {
         assertEquals("id", error?.field)
     }
 
-    companion object : BaseInitAds("read") {
+    companion object : BaseInitAds("delete") {
         override val initObjects: List<MkplAd> = listOf(
             createInitTestModel("read")
         )

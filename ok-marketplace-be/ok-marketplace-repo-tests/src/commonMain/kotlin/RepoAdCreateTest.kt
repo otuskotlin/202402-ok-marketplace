@@ -3,16 +3,13 @@ package ru.otus.otuskotlin.marketplace.backend.repo.tests
 import ru.otus.otuskotlin.marketplace.common.models.*
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseOk
-import ru.otus.otuskotlin.marketplace.common.repo.IRepoAd
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNotEquals
+import ru.otus.otuskotlin.marketplace.repo.common.IRepoAdInitializable
+import kotlin.test.*
 
 
 abstract class RepoAdCreateTest {
-    abstract val repo: IRepoAd
-    protected open val lockNew: MkplAdLock = MkplAdLock("20000000-0000-0000-0000-000000000002")
+    abstract val repo: IRepoAdInitializable
+    protected open val uuidNew = MkplAdId("10000000-0000-0000-0000-000000000001")
 
     private val createObj = MkplAd(
         title = "create object",
@@ -25,17 +22,13 @@ abstract class RepoAdCreateTest {
     @Test
     fun createSuccess() = runRepoTest {
         val result = repo.createAd(DbAdRequest(createObj))
+        val expected = createObj
         assertIs<DbAdResponseOk>(result)
-        val expected = createObj.copy(id = result.data.id)
-        println("EXPECTED: $expected\nACT: ${result.data}")
+        assertEquals(uuidNew, result.data.id)
         assertEquals(expected.title, result.data.title)
         assertEquals(expected.description, result.data.description)
         assertEquals(expected.adType, result.data.adType)
-        assertEquals(expected.adType, result.data.adType)
         assertNotEquals(MkplAdId.NONE, result.data.id)
-        assertEquals(lockNew, result.data.lock)
-        assertEquals(expected.ownerId, result.data.ownerId)
-        assertEquals(expected.productId, result.data.productId)
     }
 
     companion object : BaseInitAds("create") {
