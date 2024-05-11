@@ -38,6 +38,7 @@ dependencies {
     // DB
     implementation(projects.okMarketplaceRepoStubs)
     implementation(projects.okMarketplaceRepoInmemory)
+    implementation(projects.okMarketplaceRepoPostgres)
     testImplementation(projects.okMarketplaceRepoCommon)
     testImplementation(projects.okMarketplaceStubs)
 
@@ -66,4 +67,5 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    environment("MKPLADS_DB", "test_db")
 }

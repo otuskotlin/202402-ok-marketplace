@@ -24,3 +24,16 @@ springdoc:
         url: specs-ad-v1.yaml
       - name: v2
         url: specs-ad-v2.yaml
+
+marketplace:
+  repository:
+    test: "inmemory"
+    prod: "$DB_TYPE_PROD:inmemory"
+
+psql:
+  schema: public
+  database: "${MKPLADS_DB:marketplace-ads}"
+  host: "${MKPLADS_HOST:localhost}"
+  port: 5433 #"${MKPLADS_PORT:5433}"
+  user: "${MKPLADS_USER:postgres}"
+  password: "${MKPLADS_PASS:marketplace-pass}"

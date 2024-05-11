@@ -16,13 +16,13 @@ suspend fun Client.deleteAd(ad: AdResponseObject, debug: AdDebug = debugStubV2) 
         id should beValidId
         lock should beValidLock
 
-        val response = sendAndReceive(
+        val response: AdDeleteResponse = sendAndReceive(
             "ad/delete",
             AdDeleteRequest(
                 debug = debug,
                 ad = AdDeleteObject(id = id, lock = lock)
             )
-        ) as AdDeleteResponse
+        )
 
         response.asClue {
             response should haveSuccessResult

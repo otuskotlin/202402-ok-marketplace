@@ -15,19 +15,18 @@ private val log = Logger
  */
 abstract class AbstractDockerCompose(
     private val apps: List<AppInfo>,
-    private val dockerComposeName: String)
-: DockerCompose {
-
-    constructor(service: String, port: Int, dockerComposeName: String)
-        : this(listOf(AppInfo(service, port)), dockerComposeName)
-    private fun getComposeFile(): File {
-        val file = File("docker-compose/$dockerComposeName")
-        if (!file.exists()) throw IllegalArgumentException("file $dockerComposeName not found!")
-        return file
+    private val dockerComposeNames: List<String>
+) : DockerCompose {
+    constructor(service: String, port: Int, vararg dockerComposeName: String)
+        : this(listOf(AppInfo(service, port)), dockerComposeName.toList())
+    private fun getComposeFiles(): List<File> = dockerComposeNames.map {
+        val file = File("docker-compose/$it")
+        if (!file.exists()) throw IllegalArgumentException("file $it not found!")
+        file
     }
 
     private val compose =
-        DockerComposeContainer(getComposeFile()).apply {
+        DockerComposeContainer(getComposeFiles()).apply {
 //            withOptions("--compatibility")
             apps.forEach { (service, port) ->
                 withExposedService(
@@ -39,11 +38,11 @@ abstract class AbstractDockerCompose(
 
     override fun start() {
         kotlin.runCatching { compose.start() }.onFailure {
-            log.e { "Failed to start $dockerComposeName" }
+            log.e { "Failed to start $dockerComposeNames" }
             throw it
         }
 
-        log.w("\n=========== $dockerComposeName started =========== \n")
+        log.w("\n=========== $dockerComposeNames started =========== \n")
         apps.forEachIndexed { index, _ ->
             log.i { "Started docker-compose with App at: ${getUrl(index)}" }
         }
@@ -51,7 +50,7 @@ abstract class AbstractDockerCompose(
 
     override fun stop() {
         compose.close()
-        log.w("\n=========== $dockerComposeName complete =========== \n")
+        log.w("\n=========== $dockerComposeNames complete =========== \n")
     }
 
     override fun clearDb() {

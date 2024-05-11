@@ -25,12 +25,12 @@ suspend fun Client.createAd(ad: AdCreateObject = someCreateAd, debug: AdDebug = 
 
 suspend fun <T> Client.createAd(ad: AdCreateObject = someCreateAd, debug: AdDebug = debugStubV2, block: (AdCreateResponse) -> T): T =
     withClue("createAdV2: $ad") {
-        val response = sendAndReceive(
+        val response: AdCreateResponse = sendAndReceive(
             "ad/create", AdCreateRequest(
                 debug = debug,
                 ad = ad
             )
-        ) as AdCreateResponse
+        )
 
         response.asClue(block)
     }

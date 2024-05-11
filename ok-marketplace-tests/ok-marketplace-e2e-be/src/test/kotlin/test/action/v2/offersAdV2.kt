@@ -16,13 +16,13 @@ suspend fun Client.offersAd(id: String?, debug: AdDebug = debugStubV2): AdOffers
 
 suspend fun <T> Client.offersAd(id: String?, debug: AdDebug = debugStubV2, block: (AdOffersResponse) -> T): T =
     withClue("searchOffersV2: $id") {
-        val response = sendAndReceive(
+        val response: AdOffersResponse = sendAndReceive(
             "ad/offers",
             AdOffersRequest(
                 debug = debug,
                 ad = AdReadObject(id = id),
             )
-        ) as AdOffersResponse
+        )
 
         response.asClue(block)
     }

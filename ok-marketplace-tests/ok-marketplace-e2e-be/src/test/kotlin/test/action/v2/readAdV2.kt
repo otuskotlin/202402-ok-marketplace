@@ -18,13 +18,13 @@ suspend fun <T> Client.readAd(id: String?, debug: AdDebug = debugStubV2, block: 
     withClue("readAdV1: $id") {
         id should beValidId
 
-        val response = sendAndReceive(
+        val response: AdReadResponse = sendAndReceive(
             "ad/read",
             AdReadRequest(
                 debug = debug,
                 ad = AdReadObject(id = id)
             )
-        ) as AdReadResponse
+        )
 
         response.asClue(block)
     }

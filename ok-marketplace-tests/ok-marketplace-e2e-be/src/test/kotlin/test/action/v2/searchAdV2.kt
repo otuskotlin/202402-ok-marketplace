@@ -13,13 +13,13 @@ suspend fun Client.searchAd(search: AdSearchFilter, debug: AdDebug = debugStubV2
 
 suspend fun <T> Client.searchAd(search: AdSearchFilter, debug: AdDebug = debugStubV2, block: (AdSearchResponse) -> T): T =
     withClue("searchAdV2: $search") {
-        val response = sendAndReceive(
+        val response: AdSearchResponse = sendAndReceive(
             "ad/search",
             AdSearchRequest(
                 debug = debug,
                 adFilter = search,
             )
-        ) as AdSearchResponse
+        )
 
         response.asClue(block)
     }

@@ -34,12 +34,12 @@ suspend fun <T> Client.updateAd(ad: AdUpdateObject, debug: AdDebug = debugStubV2
         id should beValidId
         lock should beValidLock
 
-        val response = sendAndReceive(
+        val response: AdUpdateResponse = sendAndReceive(
             "ad/update", AdUpdateRequest(
                 debug = debug,
                 ad = ad.copy(id = id, lock = lock)
             )
-        ) as AdUpdateResponse
+        )
 
         response.asClue(block)
     }

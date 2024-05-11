@@ -6,7 +6,6 @@
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "offers",
       "result": "success",
       "ad": {
         "id": "123",

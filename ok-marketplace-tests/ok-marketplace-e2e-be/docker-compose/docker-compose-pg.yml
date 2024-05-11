@@ -1,23 +1,5 @@
 version: '3.9'
-
 services:
-  app-ktor:
-    image: ok-marketplace-app-ktor-x64:0.0.1
-    ports:
-      - "8080:8080"
-    environment:
-      DB_TYPE_PROD: "psql"
-      MKPLADS_HOST: "psql"
-      MKPLADS_PORT: 5432
-      MKPLADS_DB: "marketplace_ads"
-      MKPLADS_USER: "postgres"
-      MKPLADS_PASS: "marketplace-pass"
-    depends_on:
-      psql:
-        condition: service_healthy
-      liquibase:
-        condition: service_completed_successfully
-
   psql:
     image: postgres
     #    volumes:
