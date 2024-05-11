@@ -25,7 +25,6 @@ internal abstract class AdRepoBaseV2Test {
         ),
         prepareCtx(MkplAdStub.prepareResult {
             id = MkplAdId(uuidNew)
-            ownerId = MkplUserId.NONE
             lock = MkplAdLock(uuidNew)
         })
             .toTransportCreate()
@@ -93,7 +92,7 @@ internal abstract class AdRepoBaseV2Test {
         ),
         MkplContext(
             state = MkplState.RUNNING,
-            adResponse = MkplAdStub.get(),
+            adResponse = MkplAdStub.prepareResult { permissionsClient.clear() },
             adsResponse = MkplAdStub.prepareSearchList("xx", MkplDealSide.SUPPLY)
                 .onEach { it.permissionsClient.clear() }
                 .sortedBy { it.id.asString() }
