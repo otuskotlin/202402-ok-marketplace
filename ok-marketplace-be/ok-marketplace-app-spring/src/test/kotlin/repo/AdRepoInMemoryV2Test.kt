@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.context.annotation.Import
 import org.springframework.test.web.reactive.server.WebTestClient
 import ru.otus.otuskotlin.markeplace.app.spring.config.AdConfig
-import ru.otus.otuskotlin.markeplace.app.spring.controllers.AdControllerV1Fine
+import ru.otus.otuskotlin.markeplace.app.spring.controllers.AdControllerV2Fine
 import ru.otus.otuskotlin.marketplace.common.models.MkplDealSide
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdFilterRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdIdRequest
@@ -23,7 +23,7 @@ import kotlin.test.Test
 
 // Temporary simple test with stubs
 @WebFluxTest(
-    AdControllerV1Fine::class, AdConfig::class,
+    AdControllerV2Fine::class, AdConfig::class,
     properties = ["spring.main.allow-bean-definition-overriding=true"]
 )
 @Import(RepoInMemoryConfig::class)
