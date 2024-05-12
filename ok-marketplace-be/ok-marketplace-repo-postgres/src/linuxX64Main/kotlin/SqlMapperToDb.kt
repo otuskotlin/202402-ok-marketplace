@@ -23,7 +23,8 @@ internal fun MkplAd.toDb() = id.toDb() + mapOf(
 )
 
 internal fun DbAdFilterRequest.toDb() = mapOf(
-    SqlFields.FILTER_TITLE to titleFilter.toDb(),
+                                                 // Используется для LIKE '%titleFilter%
+    SqlFields.FILTER_TITLE to titleFilter.toDb()?.let { "%$it%"},
     SqlFields.FILTER_AD_TYPE to dealSide.toDb(),
     SqlFields.FILTER_OWNER_ID to ownerId.asString().toDb(),
 )

@@ -167,13 +167,14 @@ actual class RepoAdSql actual constructor(
                 ?.let { "${SqlFields.TITLE.quoted()} LIKE :${SqlFields.TITLE}" },
         )
             .takeIf { it.isNotEmpty() }
-            ?.let { "WHERE ${it.joinToString()}" }
+            ?.let { "WHERE ${it.joinToString(separator = " AND ")}" }
             ?: ""
 
         val sql = """
                 SELECT ${SqlFields.allFields.joinToString { it.quoted() }}
                 FROM $dbName $where
             """.trimIndent()
+        println("SQL: $sql")
         val res = driver.execute(
             sql = sql,
             rq.toDb(),

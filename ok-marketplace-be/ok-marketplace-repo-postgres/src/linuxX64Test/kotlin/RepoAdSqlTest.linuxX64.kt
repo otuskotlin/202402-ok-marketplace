@@ -5,6 +5,7 @@ import kotlinx.cinterop.toKString
 import kotlinx.coroutines.test.runTest
 import platform.posix.getenv
 import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.repo.DbAdFilterRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdRequest
 import kotlin.test.Test
 
@@ -31,5 +32,23 @@ class RepoAdSqlTest {
             )
         )
         println("CREATED $res")
+    }
+
+    @OptIn(ExperimentalForeignApi::class)
+    @Test
+    fun search() = runTest {
+        val pgPort = getenv("postgresPort")?.toKString()?.toIntOrNull() ?: 5432
+
+        val repo = RepoAdSql(
+            properties = SqlProperties(port = pgPort)
+        )
+        val res = repo.searchAd(
+            rq = DbAdFilterRequest(
+                titleFilter = "tttt",
+                dealSide = MkplDealSide.DEMAND,
+                ownerId = MkplUserId("1234"),
+            )
+        )
+        println("SEARCH $res")
     }
 }
