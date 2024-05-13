@@ -42,6 +42,8 @@ actual class RepoAdSql actual constructor(
         initConnection(properties)
     }
 
+    // insert into db (id) VALUES (:id)
+    // insert into db ("iD", iD) VALUES (:id)
     private suspend fun saveElement(saveAd: MkplAd): IDbAdResponse {
         val sql = """
                 INSERT INTO $dbName (

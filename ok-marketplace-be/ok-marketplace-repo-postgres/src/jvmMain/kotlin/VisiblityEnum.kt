@@ -19,6 +19,7 @@ fun Table.visibilityEnumeration(
     },
     toDb = { value ->
         when (value) {
+//            MkplVisibility.VISIBLE_TO_OWNER -> PGobject().apply { type = SqlFields.VISIBILITY_TYPE; value = SqlFields.VISIBILITY_OWNER}
             MkplVisibility.VISIBLE_TO_OWNER -> PgVisibilityOwner
             MkplVisibility.VISIBLE_TO_GROUP -> PgVisibilityGroup
             MkplVisibility.VISIBLE_PUBLIC -> PgVisibilityPublic

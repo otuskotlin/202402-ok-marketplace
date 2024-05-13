@@ -165,7 +165,7 @@ tasks {
             environment("postgresPort", pgPort.toString())
         }
     }
-    withType(Test::class) {
+    withType(Test::class).configureEach {
         dependsOn(liquibaseUpdate)
         finalizedBy(stopPg)
         doFirst {

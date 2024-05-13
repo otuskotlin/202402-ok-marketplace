@@ -22,7 +22,7 @@ actual class RepoAdSql actual constructor(
         else -> throw IllegalArgumentException("Unknown driver for url ${properties.url}")
     }
 
-    val conn = Database.connect(
+    private val conn = Database.connect(
         properties.url, driver, properties.user, properties.password
     )
 
