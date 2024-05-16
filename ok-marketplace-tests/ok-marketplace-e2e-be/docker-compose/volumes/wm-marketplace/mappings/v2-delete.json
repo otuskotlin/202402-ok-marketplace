@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v2/ad/delete"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "delete",
+      "result": "success",
+      "ad": {
+        "id": "{{{jsonPath request.body '$.ad.id'}}}",
+        "title": "Требуется болт",
+        "description": "Требуется болт 100x5 с шестигранной шляпкой",
+        "adType": "demand",
+        "visibility": "public"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}
