@@ -118,8 +118,10 @@ kotlin {
                 implementation(project(":ok-marketplace-api-v1-jackson"))
                 implementation(project(":ok-marketplace-api-v1-mappers"))
 
+                implementation(projects.okMarketplaceRepoCassandra)
+
                 implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
-                implementation(libs.testcontainers.postgres)
+                implementation(libs.testcontainers.cassandra)
             }
         }
 

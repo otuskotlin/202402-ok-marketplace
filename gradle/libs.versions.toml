@@ -20,6 +20,7 @@ spring-boot = "3.2.0"
 
 liquibase = "4.27.0"
 exposed = "0.50.0"
+cassandra = "4.17.0"
 
 # Docker
 testcontainers = "1.19.7"
@@ -40,6 +41,7 @@ coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", ve
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines" }
 coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
+coroutines-jdk9 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk9", version.ref = "coroutines" }
 cor = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-cor" }
 uuid = "com.benasher44:uuid:0.8.4"
 
@@ -91,9 +93,13 @@ db-hikari = "com.zaxxer:HikariCP:5.1.0"
 db-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 db-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
 db-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+db-cassandra-core = { module = "com.datastax.oss:java-driver-core", version.ref = "cassandra" }
+db-cassandra-qbuilder = { module = "com.datastax.oss:java-driver-query-builder", version.ref = "cassandra" }
+db-cassandra-kapt = { module = "com.datastax.oss:java-driver-mapper-processor", version.ref = "cassandra" }
+db-cassandra-mapper = { module = "com.datastax.oss:java-driver-mapper-runtime", version.ref = "cassandra" }
 
 # Liquidbase
-liquibase-core = {module = "org.liquibase:liquibase-core", version.ref = "liquibase"}
+liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
 liquibase-picocli = "info.picocli:picocli:4.7.5"
 liquibase-snakeyml = "org.yaml:snakeyaml:1.33"
 
@@ -107,14 +113,17 @@ mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }
 testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-cassandra = { module = "org.testcontainers:cassandra", version.ref = "testcontainers" }
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-datatest", "kotest-property"]
 exposed = ["db-exposed-core", "db-exposed-dao", "db-exposed-jdbc"]
+cassandra = ["db-cassandra-core", "db-cassandra-mapper", "db-cassandra-qbuilder"]
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.2.0" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

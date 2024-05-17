@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.MkplAd
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdFilter
@@ -11,7 +10,7 @@ import kotlin.test.assertEquals
 
 class ValidateTitleHasContentTest {
     @Test
-    fun emptyString() = runTest {
+    fun emptyString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adValidating = MkplAd(title = ""))
         chain.exec(ctx)
         assertEquals(MkplState.RUNNING, ctx.state)
@@ -19,7 +18,7 @@ class ValidateTitleHasContentTest {
     }
 
     @Test
-    fun noContent() = runTest {
+    fun noContent() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adValidating = MkplAd(title = "12!@#$%^&*()_+-="))
         chain.exec(ctx)
         assertEquals(MkplState.FAILING, ctx.state)
@@ -28,7 +27,7 @@ class ValidateTitleHasContentTest {
     }
 
     @Test
-    fun normalString() = runTest {
+    fun normalString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = "Ж"))
         chain.exec(ctx)
         assertEquals(MkplState.RUNNING, ctx.state)

@@ -1,15 +1,17 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
 import ru.otus.otuskotlin.marketplace.common.MkplContext
-import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
+import ru.otus.otuskotlin.marketplace.common.models.MkplCommand
+import ru.otus.otuskotlin.marketplace.common.models.MkplState
+import ru.otus.otuskotlin.marketplace.common.models.MkplWorkMode
 import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun validationIdCorrect(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationIdCorrect(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -21,7 +23,7 @@ fun validationIdCorrect(command: MkplCommand, processor: MkplAdProcessor) = runT
     assertNotEquals(MkplState.FAILING, ctx.state)
 }
 
-fun validationIdTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationIdTrim(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -35,7 +37,7 @@ fun validationIdTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest
     assertNotEquals(MkplState.FAILING, ctx.state)
 }
 
-fun validationIdEmpty(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationIdEmpty(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -52,7 +54,7 @@ fun validationIdEmpty(command: MkplCommand, processor: MkplAdProcessor) = runTes
     assertContains(error?.message ?: "", "id")
 }
 
-fun validationIdFormat(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationIdFormat(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
