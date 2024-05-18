@@ -35,7 +35,10 @@ include(":ok-marketplace-api-v2-kmp")
 include(":ok-marketplace-api-log1")
 
 include(":ok-marketplace-common")
+include(":ok-marketplace-biz")
+include(":ok-marketplace-stubs")
 
 include(":ok-marketplace-app-common")
-include(":ok-marketplace-app-tmp")
+//include(":ok-marketplace-app-tmp")
+include(":ok-marketplace-app-spring")
 
