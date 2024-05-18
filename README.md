@@ -58,3 +58,6 @@ Marketplace -- это площадка, на которой пользовате
 3. [ok-marketplace-api-v2-kmp](ok-marketplace-be/ok-marketplace-api-v2-kmp) - Генерация второй версии транспортных
    моделей с KMP
 
+### Фреймворки и транспорты
+1. [ok-marketplace-app-spring](ok-marketplace-be/ok-marketplace-app-spring) - Приложение на Spring Framework
+
