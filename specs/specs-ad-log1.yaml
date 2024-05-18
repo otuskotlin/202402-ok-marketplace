@@ -28,6 +28,7 @@ components:
           items:
             $ref: '#/components/schemas/ErrorLogModel'
 
+# переименовать в MkplAdLogModel
     MkplLogModel:
       title: Модель лога для микросервиса Marketplace
       type: object
