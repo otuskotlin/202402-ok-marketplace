@@ -1,0 +1,322 @@
+openapi: 3.0.3
+info:
+  title: Marketplace ${VERSION_APP}
+  description: This is a place where sellers and buyers meat each other
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 3.0.0
+servers:
+  - url: http://localhost:8080/v2
+tags:
+  - name: ad
+    description: Объявление (о покупке или продаже)
+paths:
+  /ad/edit:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing
+      operationId: adEdit
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommand'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+  /ad/edit-insert:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing insert
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommandInsertText'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+  /ad/edit-delete:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing delete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommandDeleteText'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+  /ad/change-product:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing delete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommandChangeProduct'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+  /ad/change-type:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing delete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommandChangeType'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+  /ad/change-visibility:
+    post:
+      tags:
+        - ad
+      summary: Collaborative ad editing delete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdCommandChangeVisibility'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdEditReceive'
+components:
+  schemas:
+    AdCommand:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/AdVersion'
+        debug:
+          $ref: '#/components/schemas/AdRequestDebug'
+        command:
+          type: string
+          description: Тип изменения
+          example: insert
+      discriminator:
+        propertyName: command
+        mapping:
+          get-updates: '#/components/schemas/AdCommandGetUpdates'
+          insert: '#/components/schemas/AdCommandInsertText'
+          delete: '#/components/schemas/AdCommandDeleteText'
+          change-prod: '#/components/schemas/AdCommandChangeProduct'
+          change-type: '#/components/schemas/AdCommandChangeType'
+          change-visibility: '#/components/schemas/AdCommandChangeVisibility'
+      anyOf:
+        - $ref: '#/components/schemas/AdCommandGetUpdates'
+        - $ref: '#/components/schemas/AdCommandInsertText'
+        - $ref: '#/components/schemas/AdCommandDeleteText'
+        - $ref: '#/components/schemas/AdCommandChangeProduct'
+        - $ref: '#/components/schemas/AdCommandChangeType'
+        - $ref: '#/components/schemas/AdCommandChangeVisibility'
+
+    AdTextFields:
+      type: string
+      enum:
+        - title
+        - description
+
+    AdCommandGetUpdates:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - description: "Пустая команда для получения последних обновлений"
+
+    AdCommandInsertText:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - type: object
+          description: "Вставка подстроки в текстовое поле"
+          properties:
+            field:
+              $ref: '#/components/schemas/AdTextFields'
+            pos:
+              type: integer
+            value:
+              type: string
+
+    AdCommandDeleteText:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - type: object
+          description: "Удаление подстроки из текстового поля"
+          properties:
+            command:
+              example: "delete"
+            field:
+              $ref: '#/components/schemas/AdTextFields'
+            posF:
+              type: integer
+            posT:
+              type: integer
+
+    AdCommandChangeProduct:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - type: object
+          description: "Изменить значение идентификатора продукта"
+          properties:
+            command:
+              example: "change-prod"
+            productId:
+              $ref: '#/components/schemas/ProductId'
+
+    AdCommandChangeType:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - type: object
+          description: "Изменить значение типа объявления"
+          properties:
+            command:
+              example: "change-type"
+            type:
+              $ref: '#/components/schemas/DealSide'
+
+    AdCommandChangeVisibility:
+      allOf:
+        - $ref: '#/components/schemas/AdCommand'
+        - type: object
+          description: "Изменить значение типа видимости объявления"
+          properties:
+            command:
+              example: "change-visibility"
+            visibility:
+              $ref: '#/components/schemas/AdVisibility'
+
+    AdEditReceive:
+      type: object
+      properties:
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        commands:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdCommand'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+        level:
+          type: string
+          example: "info"
+          enum:
+            - debug
+            - info
+            - warn
+            - error
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+    ProductId:
+      type: string
+      description: Идентификатор модели продукта, к которому относится объявление
+    AdVersion:
+      type: integer
+      description: Версия документа
+      example: 133
+    DealSide:
+      type: string
+      description: 'Сторона сделки: спрос или предложение'
+      enum:
+        - demand
+        - supply
+    AdVisibility:
+      type: string
+      description: >-
+        Тип видимости объявления. Возможные значения: видит только владелец,
+        только зарегистрированный в системе пользователь, видимо всем
+      enum:
+        - ownerOnly
+        - registeredOnly
+        - public
+    AdRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+    AdRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/AdDebug'
+    AdDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/AdRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/AdRequestDebugStubs'
+    AdRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badDescription
+        - badVisibility
+        - cannotDelete
+        - badSearchString

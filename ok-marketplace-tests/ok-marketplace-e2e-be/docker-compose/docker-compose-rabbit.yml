@@ -1,0 +1,33 @@
+# Конфигурация для rabbit + (в перспективе) postgresql
+
+version: '3'
+services:
+  app-rabbit:
+    image: ok-marketplace-app-rabbit:latest
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      RABBIT_HOST: rabbit
+    networks:
+      - app-tier
+
+  rabbit:
+    image: rabbitmq:3.11.14-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
