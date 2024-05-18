@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
 }
 
-group = "ru.otus.otuskotlin.marketplace"
+group = "ru.otus.otuskotlin.marketplace.libs"
 version = "0.0.1"
 
 allprojects {
@@ -21,7 +21,6 @@ ext {
     val specDir = layout.projectDirectory.dir("../specs")
     set("spec-v1", specDir.file("specs-ad-v1.yaml").toString())
     set("spec-v2", specDir.file("specs-ad-v2.yaml").toString())
-    set("spec-log1", specDir.file("specs-ad-log1.yaml").toString())
 }
 
 tasks {
