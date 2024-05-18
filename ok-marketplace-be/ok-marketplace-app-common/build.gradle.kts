@@ -14,7 +14,7 @@ kotlin {
                 implementation(project(":ok-marketplace-common"))
                 implementation(project(":ok-marketplace-api-log1"))
 
-                implementation(project(":ok-marketplace-biz"))
+                implementation(projects.okMarketplaceBiz)
             }
         }
         commonTest {

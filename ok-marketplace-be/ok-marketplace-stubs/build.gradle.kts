@@ -1,12 +1,8 @@
 plugins {
-    kotlin("multiplatform")
+    id("build-kmp")
 }
 
 kotlin {
-    jvm {}
-    macosX64 {}
-    macosArm64 {}
-    linuxX64 {}
 
     sourceSets {
         val commonMain by getting {
