@@ -58,7 +58,7 @@ fun errorEmptyLock(id: MkplAdId) = DbAdResponseErr(
 
 fun errorDb(e: RepoException) = DbAdResponseErr(
     errorSystem(
-        violationCode = "dbLockEmpty",
+        violationCode = "db-error",
         e = e
     )
 )

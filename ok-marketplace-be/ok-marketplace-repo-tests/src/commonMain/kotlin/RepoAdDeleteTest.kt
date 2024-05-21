@@ -3,13 +3,14 @@ package ru.otus.otuskotlin.marketplace.backend.repo.tests
 import ru.otus.otuskotlin.marketplace.common.models.MkplAd
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
 import ru.otus.otuskotlin.marketplace.common.repo.*
+import ru.otus.otuskotlin.marketplace.repo.common.AdRepoInitialized
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 abstract class RepoAdDeleteTest {
-    abstract val repo: IRepoAd
+    abstract val repo: AdRepoInitialized
     protected open val deleteSucc = initObjects[0]
     protected open val deleteConc = initObjects[1]
     protected open val notFoundId = MkplAdId("ad-repo-delete-notFound")
