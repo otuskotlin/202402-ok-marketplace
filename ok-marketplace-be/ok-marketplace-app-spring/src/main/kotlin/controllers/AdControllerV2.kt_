@@ -1,0 +1,61 @@
+package ru.otus.otuskotlin.markeplace.app.spring.controllers
+
+import org.springframework.web.bind.annotation.*
+import ru.otus.otuskotlin.marketplace.api.v2.mappers.*
+import ru.otus.otuskotlin.marketplace.api.v2.models.*
+import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
+import ru.otus.otuskotlin.marketplace.common.MkplContext
+
+@Suppress("unused")
+@RestController
+@RequestMapping("v2/ad")
+class AdControllerV2(private val processor: MkplAdProcessor) {
+
+    @PostMapping("create")
+    suspend fun create(@RequestBody request: AdCreateRequest): AdCreateResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportCreate()
+    }
+
+    @PostMapping("read")
+    suspend fun read(@RequestBody request: AdReadRequest): AdReadResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportRead()
+    }
+
+    @PostMapping("update")
+    suspend fun update(@RequestBody request: AdUpdateRequest): AdUpdateResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportUpdate()
+    }
+
+    @PostMapping("delete")
+    suspend fun delete(@RequestBody request: AdDeleteRequest): AdDeleteResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportDelete()
+    }
+
+    @PostMapping("search")
+    suspend fun search(@RequestBody request: AdSearchRequest): AdSearchResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportSearch()
+    }
+
+    @PostMapping("offers")
+    suspend fun offers(@RequestBody request: AdOffersRequest): AdOffersResponse {
+        val context = MkplContext()
+        context.fromTransport(request)
+        processor.exec(context)
+        return context.toTransportOffers()
+    }
+}
