@@ -19,7 +19,7 @@ suspend inline fun <reified Q : IRequest, @Suppress("unused") reified R : IRespo
     {
         fromTransport(this@processV2.receive<Q>())
     },
-    { this@processV2.respond(toTransportAd()) },
+    { this@processV2.respond(toTransportAd() as R) },
     clazz,
     logId,
 )
