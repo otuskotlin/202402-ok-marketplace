@@ -22,7 +22,7 @@ ktor {
     docker {
         localImageName.set(project.name)
         imageTag.set(project.version.toString())
-        jreVersion.set(JavaVersion.VERSION_17)
+        jreVersion.set(JavaVersion.VERSION_21)
     }
 }
 

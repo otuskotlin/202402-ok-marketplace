@@ -33,7 +33,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdCreateResponse
+        val responseObj = response.body<AdCreateResponse>()
         assertEquals(200, response.status.value)
         assertEquals("666", responseObj.ad?.id)
     }
@@ -49,7 +49,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdReadResponse
+        val responseObj = response.body<AdReadResponse>()
         assertEquals(200, response.status.value)
         assertEquals("666", responseObj.ad?.id)
     }
@@ -71,7 +71,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdUpdateResponse
+        val responseObj = response.body<AdUpdateResponse>()
         assertEquals(200, response.status.value)
         assertEquals("666", responseObj.ad?.id)
     }
@@ -90,7 +90,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdDeleteResponse
+        val responseObj = response.body<AdDeleteResponse>()
         assertEquals(200, response.status.value)
         assertEquals("666", responseObj.ad?.id)
     }
@@ -106,7 +106,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdSearchResponse
+        val responseObj = response.body<AdSearchResponse>()
         assertEquals(200, response.status.value)
         assertEquals("d-666-01", responseObj.ads?.first()?.id)
     }
@@ -124,7 +124,7 @@ class V2AdStubApiTest {
             )
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdOffersResponse
+        val responseObj = response.body<AdOffersResponse>()
         assertEquals(200, response.status.value)
         assertEquals("d-666-01", responseObj.ads?.first()?.id)
     }
