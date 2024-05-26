@@ -5,6 +5,7 @@ import ru.otus.otuskotlin.marketplace.common.models.*
 import ru.otus.otuskotlin.marketplace.common.repo.IRepoAd
 import ru.otus.otuskotlin.marketplace.common.stubs.MkplStubs
 import ru.otus.otuskotlin.marketplace.common.ws.IMkplWsSession
+import ru.otus.otuskotlin.marketplace.states.common.models.MkplStateRq
 
 data class MkplContext(
     var command: MkplCommand = MkplCommand.NONE,
@@ -32,6 +33,9 @@ data class MkplContext(
     var adRepoPrepare: MkplAd = MkplAd(), // То, что готовим для сохранения в БД
     var adRepoDone: MkplAd = MkplAd(),  // Результат, полученный из БД
     var adsRepoDone: MutableList<MkplAd> = mutableListOf(),
+
+    // Запрашиваем статус из модуля статистики
+    var adState: MkplStateRq = MkplStateRq(),
 
     var adResponse: MkplAd = MkplAd(),
     var adsResponse: MutableList<MkplAd> = mutableListOf(),

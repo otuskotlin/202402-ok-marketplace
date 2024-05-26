@@ -19,6 +19,12 @@ subprojects {
 }
 
 tasks {
+    create("clean") {
+        group = "build"
+        gradle.includedBuilds.forEach {
+            dependsOn(it.task(":clean"))
+        }
+    }
     val buildImages: Task by creating {
         dependsOn(gradle.includedBuild("ok-marketplace-be").task(":buildImages"))
     }
@@ -29,7 +35,6 @@ tasks {
 
     create("check") {
         group = "verification"
-//        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":check"))
         dependsOn(buildImages)
         dependsOn(e2eTests)
     }

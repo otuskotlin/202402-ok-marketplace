@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.coroutines.core)
     implementation(libs.kotlinx.atomicfu)
 
-    implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
+    implementation(libs.mkpl.logs.logback)
 
     implementation(project(":ok-marketplace-app-common"))
 

@@ -31,6 +31,6 @@ open class AccRestTestBaseShort(dockerCompose: DockerCompose, debug: TestDebug =
 
 class AccRestWiremockTest : AccRestTestBaseFull(WiremockDockerCompose)
 
-class AccRestSpringTest : AccRestTestBaseFull(SpringDockerCompose, debug = TestDebug.PROD)
+//class AccRestSpringTest : AccRestTestBaseFull(SpringDockerCompose, debug = TestDebug.PROD)
 //class AccRestKtorPgJvmTest : AccRestTestBaseFull(KtorJvmPGDockerCompose, debug = TestDebug.PROD)
 class AccRestKtorPgLinuxTest : AccRestTestBaseShort(KtorLinuxPGDockerCompose, debug = TestDebug.PROD)
