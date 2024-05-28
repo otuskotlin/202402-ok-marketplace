@@ -64,6 +64,7 @@ ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
 ktor-server-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-calllogging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-websocket = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
 # Spring

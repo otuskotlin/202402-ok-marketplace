@@ -8,4 +8,6 @@ enum class MkplCommand {
     DELETE,
     SEARCH,
     OFFERS,
+    INIT,
+    FINISH,
 }

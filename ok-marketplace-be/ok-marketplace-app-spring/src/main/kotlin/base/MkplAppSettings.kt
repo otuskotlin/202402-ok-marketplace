@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.markeplace.app.spring.config
+package ru.otus.otuskotlin.markeplace.app.spring.base
 
 import ru.otus.otuskotlin.marketplace.app.common.IMkplAppSettings
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor

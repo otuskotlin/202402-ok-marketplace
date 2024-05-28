@@ -1,7 +1,7 @@
 package ru.otus.otuskotlin.markeplace.app.spring.controllers
 
 import org.springframework.web.bind.annotation.*
-import ru.otus.otuskotlin.markeplace.app.spring.config.MkplAppSettings
+import ru.otus.otuskotlin.markeplace.app.spring.base.MkplAppSettings
 import ru.otus.otuskotlin.marketplace.api.v2.mappers.*
 import ru.otus.otuskotlin.marketplace.api.v2.models.*
 import ru.otus.otuskotlin.marketplace.app.common.controllerHelper

@@ -52,6 +52,7 @@ kotlin {
                 implementation(libs.ktor.server.negotiation)
                 implementation(libs.ktor.server.headers.response)
                 implementation(libs.ktor.server.headers.caching)
+                implementation(libs.ktor.server.websocket)
 
 //                // Для того, чтоб получать содержимое запроса более одного раза
 //                В Application.main добавить `install(DoubleReceive)`
