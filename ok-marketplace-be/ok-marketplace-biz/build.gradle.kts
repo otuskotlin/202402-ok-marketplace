@@ -13,8 +13,9 @@ kotlin {
                 implementation(libs.mkpl.cor)
                 implementation(libs.mkpl.state.common)
 
-                implementation(project(":ok-marketplace-common"))
-                implementation(project(":ok-marketplace-stubs"))
+                implementation(projects.okMarketplaceCommon)
+                implementation(projects.okMarketplaceStubs)
+                implementation(projects.okMarketplaceAuth)
             }
         }
         commonTest {

@@ -5,10 +5,15 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
 import ru.otus.otuskotlin.marketplace.api.v1.models.*
+import ru.otus.otuskotlin.marketplace.app.common.AUTH_HEADER
+import ru.otus.otuskotlin.marketplace.app.common.createJwtTestHeader
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.permissions.MkplPrincipalModel
+import ru.otus.otuskotlin.marketplace.common.permissions.MkplUserGroups
 import ru.otus.otuskotlin.marketplace.mappers.v1.*
 import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
+import ru.otus.otuskotlin.marketplace.stubs.MkplAdStubBolts
 import kotlin.test.Test
 
 internal abstract class AdRepoBaseV1Test {
@@ -76,7 +81,6 @@ internal abstract class AdRepoBaseV1Test {
         MkplContext(
             state = MkplState.RUNNING,
             adsResponse = MkplAdStub.prepareSearchList("xx", MkplDealSide.SUPPLY)
-                .onEach { it.permissionsClient.clear() }
                 .sortedBy { it.id.asString() }
                 .toMutableList()
         )
@@ -92,9 +96,8 @@ internal abstract class AdRepoBaseV1Test {
         ),
         MkplContext(
             state = MkplState.RUNNING,
-            adResponse = MkplAdStub.prepareResult { permissionsClient.clear() },
+            adResponse = MkplAdStub.get(),
             adsResponse = MkplAdStub.prepareSearchList("xx", MkplDealSide.SUPPLY)
-                .onEach { it.permissionsClient.clear() }
                 .sortedBy { it.id.asString() }
                 .toMutableList()
         )
@@ -103,21 +106,23 @@ internal abstract class AdRepoBaseV1Test {
 
     private fun prepareCtx(ad: MkplAd) = MkplContext(
         state = MkplState.RUNNING,
-        adResponse = ad.apply {
-            // Пока не реализована эта функциональность
-            permissionsClient.clear()
-        },
+        adResponse = ad,
     )
 
     private inline fun <reified Req : Any, reified Res : IResponse> testRepoAd(
         url: String,
         requestObj: Req,
         expectObj: Res,
+        principal: MkplPrincipalModel = MkplPrincipalModel(
+            id = MkplAdStubBolts.AD_DEMAND_BOLT1.ownerId,
+            groups = setOf(MkplUserGroups.TEST, MkplUserGroups.USER)
+        )
     ) {
         webClient
             .post()
             .uri("/v1/ad/$url")
             .contentType(MediaType.APPLICATION_JSON)
+            .header(AUTH_HEADER, principal.createJwtTestHeader())
             .body(BodyInserters.fromValue(requestObj))
             .exchange()
             .expectStatus().isOk

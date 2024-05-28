@@ -1,8 +1,8 @@
 package ru.otus.otuskotlin.marketplace.common.helpers
 
 import ru.otus.otuskotlin.marketplace.common.MkplContext
-import ru.otus.otuskotlin.marketplace.common.models.MkplError
-import ru.otus.otuskotlin.marketplace.common.models.MkplState
+import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.permissions.MkplPrincipalModel
 import ru.otus.otuskotlin.marketplace.logging.common.LogLevel
 
 fun Throwable.asMkplError(
@@ -17,20 +17,20 @@ fun Throwable.asMkplError(
     exception = this,
 )
 
-inline fun MkplContext.addError(error: MkplError) = errors.add(error)
-inline fun MkplContext.addErrors(error: Collection<MkplError>) = errors.addAll(error)
+fun MkplContext.addError(error: MkplError) = errors.add(error)
+fun MkplContext.addErrors(error: Collection<MkplError>) = errors.addAll(error)
 
-inline fun MkplContext.fail(error: MkplError) {
+fun MkplContext.fail(error: MkplError) {
     addError(error)
     state = MkplState.FAILING
 }
 
-inline fun MkplContext.fail(errors: Collection<MkplError>) {
+fun MkplContext.fail(errors: Collection<MkplError>) {
     addErrors(errors)
     state = MkplState.FAILING
 }
 
-inline fun errorValidation(
+fun errorValidation(
     field: String,
     /**
      * Код, характеризующий ошибку. Не должен включать имя поля или указание на валидацию.
@@ -47,7 +47,7 @@ inline fun errorValidation(
     level = level,
 )
 
-inline fun errorSystem(
+fun errorSystem(
     violationCode: String,
     level: LogLevel = LogLevel.ERROR,
     e: Throwable,
@@ -57,4 +57,16 @@ inline fun errorSystem(
     message = "System error occurred. Our stuff has been informed, please retry later",
     level = level,
     exception = e,
+)
+
+fun accessViolation(
+    principal: MkplPrincipalModel,
+    operation: MkplCommand,
+    adId: MkplAdId = MkplAdId.NONE,
+) = MkplError(
+    code = "access-${operation.name.lowercase()}",
+    group = "access",
+    message = "User ${principal.genericName()} (${principal.id.asString()}) is not allowed to perform operation ${operation.name}"
+            + if (adId != MkplAdId.NONE) " on ad ${adId.asString()}" else "",
+    level = LogLevel.ERROR,
 )

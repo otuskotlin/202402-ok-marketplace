@@ -4,6 +4,7 @@ data class MkplAdFilter(
     var searchString: String = "",
     var ownerId: MkplUserId = MkplUserId.NONE,
     var dealSide: MkplDealSide = MkplDealSide.NONE,
+    var searchPermissions: MutableSet<MkplSearchPermissions> = mutableSetOf(),
 ) {
     fun deepCopy(): MkplAdFilter = copy()
 
