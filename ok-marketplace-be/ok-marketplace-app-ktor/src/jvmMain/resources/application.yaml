@@ -25,3 +25,18 @@ ktor:
 #  logger: socket
 #  socketLogger:
 #    port: 24224
+
+# Пример конфига для RabbitMQ
+#rabbit:
+#  enable: false
+#  host: localhost
+#  port: 5672
+##  username: guest
+##  password: guest
+#  v1:
+#    keyIn: mkpl-ads-v1-in
+#    keyOut: mkpl-ads-v1-out
+#    exchange: mkpl-ads-v1-exchange
+#    queue: mkpl-ads-v1-queue
+#    consumerTag: "mkpl-ads-v1-consumer"
+#    exchangeType: direct
