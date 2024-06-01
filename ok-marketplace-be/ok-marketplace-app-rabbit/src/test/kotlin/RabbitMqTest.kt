@@ -55,6 +55,7 @@ internal class RabbitMqTest {
         @JvmStatic
         fun beforeAll() {
             container.start()
+            println("CONTAINER PORT (15672): ${container.getMappedPort(15672)}")
         }
 
         @AfterClass
