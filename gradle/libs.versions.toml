@@ -76,6 +76,7 @@ spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 
 # Message Queues
 rabbitmq-client = { module = "com.rabbitmq:amqp-client", version = "5.20.0" }
+kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
 # Testing
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }

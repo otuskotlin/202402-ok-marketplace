@@ -43,4 +43,5 @@ include(":ok-marketplace-app-common")
 include(":ok-marketplace-app-spring")
 include(":ok-marketplace-app-ktor")
 include(":ok-marketplace-app-rabbit")
+include(":ok-marketplace-app-kafka")
 
