@@ -8,7 +8,7 @@ import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.mappers.v1.fromTransport
 import ru.otus.otuskotlin.marketplace.mappers.v1.toTransportAd
 
-class ConsumerStrategyV1 : ConsumerStrategy {
+class ConsumerStrategyV1 : IConsumerStrategy {
     override fun topics(config: AppKafkaConfig): InputOutputTopics {
         return InputOutputTopics(config.kafkaTopicInV1, config.kafkaTopicOutV1)
     }

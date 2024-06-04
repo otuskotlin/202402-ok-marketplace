@@ -8,7 +8,7 @@ import ru.otus.otuskotlin.marketplace.api.v2.models.IRequest
 import ru.otus.otuskotlin.marketplace.api.v2.models.IResponse
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 
-class ConsumerStrategyV2 : ConsumerStrategy {
+class ConsumerStrategyV2 : IConsumerStrategy {
     override fun topics(config: AppKafkaConfig): InputOutputTopics {
         return InputOutputTopics(config.kafkaTopicInV2, config.kafkaTopicOutV2)
     }

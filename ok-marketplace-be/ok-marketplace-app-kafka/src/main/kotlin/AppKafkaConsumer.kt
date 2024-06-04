@@ -13,24 +13,18 @@ import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.errors.WakeupException
 import ru.otus.otuskotlin.marketplace.app.common.controllerHelper
-import ru.otus.otuskotlin.marketplace.common.MkplContext
 import java.time.Duration
 import java.util.*
 
-data class InputOutputTopics(val input: String, val output: String)
-
-interface ConsumerStrategy {
-    fun topics(config: AppKafkaConfig): InputOutputTopics
-    fun serialize(source: MkplContext): String
-    fun deserialize(value: String, target: MkplContext)
-}
-
+/**
+ * Основной класс для обслуживания Кафка-интерфейса
+ */
 class AppKafkaConsumer(
     private val config: AppKafkaConfig,
-    consumerStrategies: List<ConsumerStrategy>,
+    consumerStrategies: List<IConsumerStrategy>,
     private val consumer: Consumer<String, String> = config.createKafkaConsumer(),
     private val producer: Producer<String, String> = config.createKafkaProducer()
-) {
+) : AutoCloseable {
     private val log = config.corSettings.loggerProvider.logger(this::class)
     private val process = atomic(true) // пояснить
     private val topicsAndStrategyByInputTopic: Map<String, TopicsAndStrategy> = consumerStrategies.associate {
@@ -38,8 +32,14 @@ class AppKafkaConsumer(
         topics.input to TopicsAndStrategy(topics.input, topics.output, it)
     }
 
-    fun start() = runBlocking { startSusp() }
+    /**
+     * Блокирующая функция старта получения и обработки сообщений из Кафки. Для неблокирующей версии см. [[startSusp]]
+     */
+    fun start(): Unit = runBlocking { startSusp() }
 
+    /**
+     * Неблокирующая функция старта получения и обработки сообщений из Кафки. Блокирующая версия - см. [[start]]
+     */
     suspend fun startSusp() {
         process.value = true
         try {
@@ -85,6 +85,7 @@ class AppKafkaConsumer(
     private suspend fun sendResponse(json: String, outputTopic: String) {
         val resRecord = ProducerRecord(
             outputTopic,
+//            null,
             UUID.randomUUID().toString(),
             json
         )
@@ -94,13 +95,16 @@ class AppKafkaConsumer(
         }
     }
 
-    fun stop() {
+    /**
+     * Корректное завершение для методов [[start]], [[startSusp]]
+     */
+    override fun close() {
         process.value = false
     }
 
     private data class TopicsAndStrategy(
         val inputTopic: String,
         val outputTopic: String,
-        val strategy: ConsumerStrategy
+        val strategy: IConsumerStrategy
     )
 }

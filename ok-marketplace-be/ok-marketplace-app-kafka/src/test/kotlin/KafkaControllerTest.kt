@@ -39,21 +39,23 @@ class KafkaControllerTest {
                     PARTITION,
                     0L,
                     "test-1",
-                    apiV1RequestSerialize(AdCreateRequest(
-                        ad = AdCreateObject(
-                            title = "Требуется болт",
-                            description = "some testing ad to check them all",
-                            visibility = AdVisibility.OWNER_ONLY,
-                            adType = DealSide.DEMAND
+                    apiV1RequestSerialize(
+                        AdCreateRequest(
+                            ad = AdCreateObject(
+                                title = "Требуется болт",
+                                description = "some testing ad to check them all",
+                                visibility = AdVisibility.OWNER_ONLY,
+                                adType = DealSide.DEMAND,
+                            ),
+                            debug = AdDebug(
+                                mode = AdRequestDebugMode.STUB,
+                                stub = AdRequestDebugStubs.SUCCESS,
+                            ),
                         ),
-                        debug = AdDebug(
-                            mode = AdRequestDebugMode.STUB,
-                            stub = AdRequestDebugStubs.SUCCESS
-                        )
-                    ))
+                    )
                 )
             )
-            app.stop()
+            app.close()
         }
 
         val startOffsets: MutableMap<TopicPartition, Long> = mutableMapOf()
