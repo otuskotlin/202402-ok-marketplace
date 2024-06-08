@@ -129,7 +129,7 @@ tasks {
     // Если ошибка: "Entry application.yaml is a duplicate but no duplicate handling strategy has been set."
     // Возникает из-за наличия файлов как в common, так и в jvm платформе
     withType(ProcessResources::class) {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
     val linkReleaseExecutableLinuxX64 by getting(KotlinNativeLink::class)
