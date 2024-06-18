@@ -11,10 +11,13 @@ data class MkplAd(
     var lock: MkplAdLock = MkplAdLock.NONE,
     val permissionsClient: MutableSet<MkplAdPermissionClient> = mutableSetOf()
 ) {
+    fun deepCopy(): MkplAd = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
+
     fun isEmpty() = this == NONE
 
     companion object {
         private val NONE = MkplAd()
     }
-
 }

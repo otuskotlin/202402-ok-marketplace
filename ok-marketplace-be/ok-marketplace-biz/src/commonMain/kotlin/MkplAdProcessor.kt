@@ -4,10 +4,14 @@ import ru.otus.otuskotlin.marketplace.biz.general.initStatus
 import ru.otus.otuskotlin.marketplace.biz.general.operation
 import ru.otus.otuskotlin.marketplace.biz.general.stubs
 import ru.otus.otuskotlin.marketplace.biz.stubs.*
+import ru.otus.otuskotlin.marketplace.biz.validation.*
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.MkplCorSettings
+import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
+import ru.otus.otuskotlin.marketplace.common.models.MkplAdLock
 import ru.otus.otuskotlin.marketplace.common.models.MkplCommand
 import ru.otus.otuskotlin.marketplace.cor.rootChain
+import ru.otus.otuskotlin.marketplace.cor.worker
 
 class MkplAdProcessor(
     private val corSettings: MkplCorSettings = MkplCorSettings.NONE
@@ -25,6 +29,18 @@ class MkplAdProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
+                worker("Очистка id") { adValidating.id = MkplAdId.NONE }
+                worker("Очистка заголовка") { adValidating.title = adValidating.title.trim() }
+                worker("Очистка описания") { adValidating.description = adValidating.description.trim() }
+                validateTitleNotEmpty("Проверка, что заголовок не пуст")
+                validateTitleHasContent("Проверка символов")
+                validateDescriptionNotEmpty("Проверка, что описание не пусто")
+                validateDescriptionHasContent("Проверка символов")
+
+                finishAdValidation("Завершение проверок")
+            }
         }
         operation("Получить объявление", MkplCommand.READ) {
             stubs("Обработка стабов") {
@@ -32,6 +48,14 @@ class MkplAdProcessor(
                 stubValidationBadId("Имитация ошибки валидации id")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+            validation {
+                worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
+                worker("Очистка id") { adValidating.id = MkplAdId(adValidating.id.asString().trim()) }
+                validateIdNotEmpty("Проверка на непустой id")
+                validateIdProperFormat("Проверка формата id")
+
+                finishAdValidation("Успешное завершение процедуры валидации")
             }
         }
         operation("Изменить объявление", MkplCommand.UPDATE) {
@@ -43,6 +67,23 @@ class MkplAdProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
+                worker("Очистка id") { adValidating.id = MkplAdId(adValidating.id.asString().trim()) }
+                worker("Очистка lock") { adValidating.lock = MkplAdLock(adValidating.lock.asString().trim()) }
+                worker("Очистка заголовка") { adValidating.title = adValidating.title.trim() }
+                worker("Очистка описания") { adValidating.description = adValidating.description.trim() }
+                validateIdNotEmpty("Проверка на непустой id")
+                validateIdProperFormat("Проверка формата id")
+                validateLockNotEmpty("Проверка на непустой lock")
+                validateLockProperFormat("Проверка формата lock")
+                validateTitleNotEmpty("Проверка на непустой заголовок")
+                validateTitleHasContent("Проверка на наличие содержания в заголовке")
+                validateDescriptionNotEmpty("Проверка на непустое описание")
+                validateDescriptionHasContent("Проверка на наличие содержания в описании")
+
+                finishAdValidation("Успешное завершение процедуры валидации")
+            }
         }
         operation("Удалить объявление", MkplCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -50,6 +91,18 @@ class MkplAdProcessor(
                 stubValidationBadId("Имитация ошибки валидации id")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+            validation {
+                worker("Копируем поля в adValidating") {
+                    adValidating = adRequest.deepCopy()
+                }
+                worker("Очистка id") { adValidating.id = MkplAdId(adValidating.id.asString().trim()) }
+                worker("Очистка lock") { adValidating.lock = MkplAdLock(adValidating.lock.asString().trim()) }
+                validateIdNotEmpty("Проверка на непустой id")
+                validateIdProperFormat("Проверка формата id")
+                validateLockNotEmpty("Проверка на непустой lock")
+                validateLockProperFormat("Проверка формата lock")
+                finishAdValidation("Успешное завершение процедуры валидации")
             }
         }
         operation("Поиск объявлений", MkplCommand.SEARCH) {
@@ -59,6 +112,12 @@ class MkplAdProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в adFilterValidating") { adFilterValidating = adFilterRequest.deepCopy() }
+                validateSearchStringLength("Валидация длины строки поиска в фильтре")
+
+                finishAdFilterValidation("Успешное завершение процедуры валидации")
+            }
         }
         operation("Поиск подходящих предложений для объявления", MkplCommand.OFFERS) {
             stubs("Обработка стабов") {
@@ -67,6 +126,15 @@ class MkplAdProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
+                worker("Очистка id") { adValidating.id = MkplAdId(adValidating.id.asString().trim()) }
+                validateIdNotEmpty("Проверка на непустой id")
+                validateIdProperFormat("Проверка формата id")
+
+                finishAdValidation("Успешное завершение процедуры валидации")
+            }
         }
     }.build()
 }
+
