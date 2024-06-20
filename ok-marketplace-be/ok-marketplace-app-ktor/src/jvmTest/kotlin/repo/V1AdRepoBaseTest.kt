@@ -56,7 +56,7 @@ abstract class V1AdRepoBaseTest {
                 debug = AdDebug(mode = workMode),
             ),
         ) { response ->
-            val responseObj = response.body<IResponse>() as AdCreateResponse
+            val responseObj = response.body<AdCreateResponse>()
             assertEquals(200, response.status.value)
             assertEquals(uuidNew, responseObj.ad?.id)
             assertEquals(ad.title, responseObj.ad?.title)
@@ -77,7 +77,7 @@ abstract class V1AdRepoBaseTest {
                 debug = AdDebug(mode = workMode),
             ),
         ) { response ->
-            val responseObj = response.body<IResponse>() as AdReadResponse
+            val responseObj = response.body<AdReadResponse>()
             assertEquals(200, response.status.value)
             assertEquals(uuidOld, responseObj.ad?.id)
         }
@@ -94,7 +94,7 @@ abstract class V1AdRepoBaseTest {
                 debug = AdDebug(mode = workMode),
             ),
         ) { response ->
-            val responseObj = response.body<IResponse>() as AdUpdateResponse
+            val responseObj = response.body<AdUpdateResponse>()
             assertEquals(200, response.status.value)
             assertEquals(ad.id, responseObj.ad?.id)
             assertEquals(ad.title, responseObj.ad?.title)
@@ -114,7 +114,7 @@ abstract class V1AdRepoBaseTest {
                 debug = AdDebug(mode = workMode),
             ),
         ) { response ->
-            val responseObj = response.body<IResponse>() as AdDeleteResponse
+            val responseObj = response.body<AdDeleteResponse>()
             assertEquals(200, response.status.value)
             assertEquals(uuidOld, responseObj.ad?.id)
         }
@@ -128,7 +128,7 @@ abstract class V1AdRepoBaseTest {
             debug = AdDebug(mode = workMode),
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdSearchResponse
+        val responseObj = response.body<AdSearchResponse>()
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.ads?.size)
         assertEquals(uuidOld, responseObj.ads?.first()?.id)
@@ -143,7 +143,7 @@ abstract class V1AdRepoBaseTest {
             debug = AdDebug(mode = workMode),
         ),
     ) { response ->
-        val responseObj = response.body<IResponse>() as AdOffersResponse
+        val responseObj = response.body<AdOffersResponse>()
         assertEquals(200, response.status.value)
         assertNotEquals(0, responseObj.ads?.size)
         assertEquals(uuidSup, responseObj.ads?.first()?.id)
