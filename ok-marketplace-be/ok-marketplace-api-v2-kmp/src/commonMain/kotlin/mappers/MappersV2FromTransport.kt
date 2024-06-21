@@ -95,7 +95,9 @@ fun MkplContext.fromTransport(request: AdOffersRequest) {
 }
 
 private fun AdSearchFilter?.toInternal(): MkplAdFilter = MkplAdFilter(
-    searchString = this?.searchString ?: ""
+    searchString = this?.searchString ?: "",
+    ownerId = this?.ownerId?.let { MkplUserId(it) } ?: MkplUserId.NONE,
+    dealSide = this?.adType.fromTransport(),
 )
 
 private fun AdCreateObject.toInternal(): MkplAd = MkplAd(

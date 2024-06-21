@@ -4,6 +4,7 @@ import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -13,14 +14,7 @@ fun validationIdCorrect(command: MkplCommand, processor: MkplAdProcessor) = runT
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = MkplAdId("123-234-abc-ABC"),
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.get(),
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -32,14 +26,9 @@ fun validationIdTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = MkplAdId(" \n\t 123-234-abc-ABC \n\t "),
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            id = MkplAdId(" \n\t ${id.asString()} \n\t ")
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -51,14 +40,9 @@ fun validationIdEmpty(command: MkplCommand, processor: MkplAdProcessor) = runTes
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = MkplAdId(""),
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            id = MkplAdId("")
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
@@ -73,14 +57,9 @@ fun validationIdFormat(command: MkplCommand, processor: MkplAdProcessor) = runTe
         command = command,
         state = MkplState.NONE,
         workMode = MkplWorkMode.TEST,
-        adRequest = MkplAd(
-            id = MkplAdId("!@#\$%^&*(),.{}"),
-            title = "abc",
-            description = "abc",
-            adType = MkplDealSide.DEMAND,
-            visibility = MkplVisibility.VISIBLE_PUBLIC,
-            lock = MkplAdLock("123-234-abc-ABC"),
-        ),
+        adRequest = MkplAdStub.prepareResult {
+            id = MkplAdId("!@#\$%^&*(),.{}")
+        },
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)

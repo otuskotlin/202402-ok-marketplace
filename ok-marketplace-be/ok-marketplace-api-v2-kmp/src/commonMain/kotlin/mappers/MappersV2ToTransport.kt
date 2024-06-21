@@ -89,14 +89,14 @@ private fun MkplAdPermissionClient.toTransportAd() = when (this) {
     MkplAdPermissionClient.DELETE -> AdPermissions.DELETE
 }
 
-private fun MkplVisibility.toTransportAd(): AdVisibility? = when (this) {
+internal fun MkplVisibility.toTransportAd(): AdVisibility? = when (this) {
     MkplVisibility.VISIBLE_PUBLIC -> AdVisibility.PUBLIC
     MkplVisibility.VISIBLE_TO_GROUP -> AdVisibility.REGISTERED_ONLY
     MkplVisibility.VISIBLE_TO_OWNER -> AdVisibility.OWNER_ONLY
     MkplVisibility.NONE -> null
 }
 
-private fun MkplDealSide.toTransportAd(): DealSide? = when (this) {
+internal fun MkplDealSide.toTransportAd(): DealSide? = when (this) {
     MkplDealSide.DEMAND -> DealSide.DEMAND
     MkplDealSide.SUPPLY -> DealSide.SUPPLY
     MkplDealSide.NONE -> null

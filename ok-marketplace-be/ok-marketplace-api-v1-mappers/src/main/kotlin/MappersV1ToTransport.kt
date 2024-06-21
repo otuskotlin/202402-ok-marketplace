@@ -91,32 +91,32 @@ private fun MkplAdPermissionClient.toTransportAd() = when (this) {
     MkplAdPermissionClient.DELETE -> AdPermissions.DELETE
 }
 
-private fun MkplVisibility.toTransportAd(): AdVisibility? = when (this) {
+internal fun MkplVisibility.toTransportAd(): AdVisibility? = when (this) {
     MkplVisibility.VISIBLE_PUBLIC -> AdVisibility.PUBLIC
     MkplVisibility.VISIBLE_TO_GROUP -> AdVisibility.REGISTERED_ONLY
     MkplVisibility.VISIBLE_TO_OWNER -> AdVisibility.OWNER_ONLY
     MkplVisibility.NONE -> null
 }
 
-private fun MkplDealSide.toTransportAd(): DealSide? = when (this) {
+internal fun MkplDealSide.toTransportAd(): DealSide? = when (this) {
     MkplDealSide.DEMAND -> DealSide.DEMAND
     MkplDealSide.SUPPLY -> DealSide.SUPPLY
     MkplDealSide.NONE -> null
 }
 
-private fun List<MkplError>.toTransportErrors(): List<Error>? = this
+internal fun List<MkplError>.toTransportErrors(): List<Error>? = this
     .map { it.toTransportAd() }
     .toList()
     .takeIf { it.isNotEmpty() }
 
-private fun MkplError.toTransportAd() = Error(
+internal fun MkplError.toTransportAd() = Error(
     code = code.takeIf { it.isNotBlank() },
     group = group.takeIf { it.isNotBlank() },
     field = field.takeIf { it.isNotBlank() },
     message = message.takeIf { it.isNotBlank() },
 )
 
-private fun MkplState.toResult(): ResponseResult? = when (this) {
+internal fun MkplState.toResult(): ResponseResult? = when (this) {
     MkplState.RUNNING -> ResponseResult.SUCCESS
     MkplState.FAILING -> ResponseResult.ERROR
     MkplState.FINISHING -> ResponseResult.SUCCESS

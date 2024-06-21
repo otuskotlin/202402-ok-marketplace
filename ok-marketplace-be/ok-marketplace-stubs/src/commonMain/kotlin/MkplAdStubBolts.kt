@@ -11,6 +11,7 @@ object MkplAdStubBolts {
             ownerId = MkplUserId("user-1"),
             adType = MkplDealSide.DEMAND,
             visibility = MkplVisibility.VISIBLE_PUBLIC,
+            lock = MkplAdLock("123"),
             permissionsClient = mutableSetOf(
                 MkplAdPermissionClient.READ,
                 MkplAdPermissionClient.UPDATE,
