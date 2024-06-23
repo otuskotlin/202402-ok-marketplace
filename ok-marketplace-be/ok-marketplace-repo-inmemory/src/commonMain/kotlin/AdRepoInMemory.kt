@@ -52,6 +52,7 @@ class AdRepoInMemory(
         val rqAd = rq.ad
         val id = rqAd.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
         val key = id.asString()
+        val oldLock = rqAd.lock.takeIf { it != MkplAdLock.NONE } ?: return@tryAdMethod errorEmptyLock(id)
 
         mutex.withLock {
             val oldAd = cache.get(key)?.toInternal()
@@ -71,6 +72,7 @@ class AdRepoInMemory(
     override suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse = tryAdMethod {
         val id = rq.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
         val key = id.asString()
+        val oldLock = rq.lock.takeIf { it != MkplAdLock.NONE } ?: return@tryAdMethod errorEmptyLock(id)
 
         mutex.withLock {
             val oldAd = cache.get(key)?.toInternal()
