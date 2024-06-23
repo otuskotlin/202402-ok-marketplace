@@ -41,7 +41,7 @@ fun repoNotFoundTest(command: MkplCommand) = runTest {
             description = "xyz",
             adType = MkplDealSide.DEMAND,
             visibility = MkplVisibility.VISIBLE_TO_GROUP,
-            lock = MkplAdLock("123"),
+            lock = MkplAdLock("123-234-abc-ABC"),
         ),
     )
     processor.exec(ctx)

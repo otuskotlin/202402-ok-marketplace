@@ -49,7 +49,10 @@ internal abstract class AdRepoBaseV2Test {
             ad = MkplAdStub.prepareResult { title = "add" }.toTransportUpdate(),
             debug = debug,
         ),
-        prepareCtx(MkplAdStub.prepareResult { title = "add" })
+        prepareCtx(MkplAdStub.prepareResult {
+            title = "add"
+            lock = MkplAdLock(uuidNew)
+        })
             .toTransportUpdate()
     )
 
