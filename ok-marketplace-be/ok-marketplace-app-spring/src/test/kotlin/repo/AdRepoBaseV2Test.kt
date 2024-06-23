@@ -27,7 +27,6 @@ internal abstract class AdRepoBaseV2Test {
             id = MkplAdId(uuidNew)
             ownerId = MkplUserId.NONE
             lock = MkplAdLock(uuidNew)
-//            lock = MkplAdLock.NONE
         })
             .toTransportCreate()
     )
