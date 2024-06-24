@@ -32,7 +32,7 @@ class AdRepoInMemorySearchTest : RepoAdSearchTest() {
 
 class AdRepoInMemoryUpdateTest : RepoAdUpdateTest() {
     override val repo = AdRepoInitialized(
-        AdRepoInMemory(),
+        AdRepoInMemory(randomUuid = { lockNew.asString() }),
         initObjects = initObjects,
     )
 }

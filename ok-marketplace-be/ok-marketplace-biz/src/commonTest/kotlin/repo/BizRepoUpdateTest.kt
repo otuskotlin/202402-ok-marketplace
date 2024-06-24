@@ -22,6 +22,7 @@ class BizRepoUpdateTest {
         ownerId = userId,
         adType = MkplDealSide.DEMAND,
         visibility = MkplVisibility.VISIBLE_PUBLIC,
+        lock = MkplAdLock("123-234-abc-ABC"),
     )
     private val repo = AdRepositoryMock(
         invokeReadAd = {
@@ -37,6 +38,7 @@ class BizRepoUpdateTest {
                     description = "xyz",
                     adType = MkplDealSide.DEMAND,
                     visibility = MkplVisibility.VISIBLE_TO_GROUP,
+                    lock = MkplAdLock("123-234-abc-ABC"),
                 )
             )
         }
@@ -52,7 +54,7 @@ class BizRepoUpdateTest {
             description = "xyz",
             adType = MkplDealSide.DEMAND,
             visibility = MkplVisibility.VISIBLE_TO_GROUP,
-            lock = MkplAdLock("123"),
+            lock = MkplAdLock("123-234-abc-ABC"),
         )
         val ctx = MkplContext(
             command = command,
