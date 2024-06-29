@@ -7,7 +7,6 @@
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "update",
       "result": "success",
       "ad": {
         "id": "123",

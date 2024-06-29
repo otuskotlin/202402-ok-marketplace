@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.context.annotation.Import
 import org.springframework.test.web.reactive.server.WebTestClient
 import ru.otus.otuskotlin.markeplace.app.spring.config.AdConfig
 import ru.otus.otuskotlin.markeplace.app.spring.controllers.AdControllerV2Fine
@@ -21,7 +22,11 @@ import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 import kotlin.test.Test
 
 // Temporary simple test with stubs
-@WebFluxTest(AdControllerV2Fine::class, AdConfig::class)
+@WebFluxTest(
+    AdControllerV2Fine::class, AdConfig::class,
+    properties = ["spring.main.allow-bean-definition-overriding=true"]
+)
+@Import(RepoInMemoryConfig::class)
 internal class AdRepoInMemoryV2Test : AdRepoBaseV2Test() {
     @Autowired
     override lateinit var webClient: WebTestClient

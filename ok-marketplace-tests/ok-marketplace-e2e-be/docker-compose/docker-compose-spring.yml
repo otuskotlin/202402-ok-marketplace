@@ -1,8 +1,0 @@
-# Конфигурация для spring + (в перспективе) postgresql
-
-version: '3'
-services:
-  app-spring:
-    image: ok-marketplace-app-spring:latest
-    ports:
-      - "8080:8080"

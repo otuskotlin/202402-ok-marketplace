@@ -7,7 +7,6 @@
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "read",
       "result": "success",
       "ad": {
         "id": "{{{jsonPath request.body '$.ad.id'}}}",

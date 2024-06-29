@@ -19,8 +19,18 @@ subprojects {
 }
 
 tasks {
+    val buildImages: Task by creating {
+        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":buildImages"))
+    }
+    val e2eTests: Task by creating {
+        dependsOn(gradle.includedBuild("ok-marketplace-tests").task(":e2eTests"))
+        mustRunAfter(buildImages)
+    }
+
     create("check") {
         group = "verification"
-        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":check"))
+//        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":check"))
+        dependsOn(buildImages)
+        dependsOn(e2eTests)
     }
 }

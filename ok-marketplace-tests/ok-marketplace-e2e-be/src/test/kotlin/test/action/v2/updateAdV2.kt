@@ -10,13 +10,13 @@ import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidId
 import ru.otus.otuskotlin.marketplace.blackbox.test.action.beValidLock
 import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
 
-suspend fun Client.updateAd(ad: AdUpdateObject): AdResponseObject =
-    updateAd(ad) {
+suspend fun Client.updateAd(ad: AdUpdateObject, debug: AdDebug = debugStubV2): AdResponseObject =
+    updateAd(ad, debug = debug) {
         it should haveSuccessResult
         it.ad shouldNotBe null
-        it.ad?.apply {
-            if (ad.title != null)
-                title shouldBe ad.title
+        it.ad!!.apply {
+//            if (ad.title != null)
+            title shouldBe ad.title
             if (ad.description != null)
                 description shouldBe ad.description
             if (ad.adType != null)
@@ -24,22 +24,22 @@ suspend fun Client.updateAd(ad: AdUpdateObject): AdResponseObject =
             if (ad.visibility != null)
                 visibility shouldBe ad.visibility
         }
-        it.ad!!
+//        it.ad!!
     }
 
-suspend fun <T> Client.updateAd(ad: AdUpdateObject, block: (AdUpdateResponse) -> T): T {
+suspend fun <T> Client.updateAd(ad: AdUpdateObject, debug: AdDebug = debugStubV2, block: (AdUpdateResponse) -> T): T {
     val id = ad.id
     val lock = ad.lock
     return withClue("updatedV1: $id, lock: $lock, set: $ad") {
         id should beValidId
         lock should beValidLock
 
-        val response = sendAndReceive(
+        val response: AdUpdateResponse = sendAndReceive(
             "ad/update", AdUpdateRequest(
                 debug = debug,
                 ad = ad.copy(id = id, lock = lock)
             )
-        ) as AdUpdateResponse
+        )
 
         response.asClue(block)
     }

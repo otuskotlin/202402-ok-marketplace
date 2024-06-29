@@ -75,8 +75,11 @@ kotlin {
                 implementation(libs.ktor.serialization.json)
 
                 // DB
+                implementation(libs.uuid)
+                implementation(projects.okMarketplaceRepoCommon)
                 implementation(projects.okMarketplaceRepoStubs)
                 implementation(projects.okMarketplaceRepoInmemory)
+                implementation(projects.okMarketplaceRepoPostgres)
 
                 // logging
                 implementation(project(":ok-marketplace-api-log1"))
@@ -116,7 +119,7 @@ kotlin {
                 implementation(project(":ok-marketplace-api-v1-mappers"))
 
                 implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
-
+                implementation(libs.testcontainers.postgres)
             }
         }
 
@@ -155,6 +158,7 @@ tasks {
                 into("${this@creating.destDir.get()}")
             }
         }
+        runCommand("apt-get update && apt-get install -y libpq5 && rm -rf /var/lib/apt/lists/*")
         copyFile(nativeFileX64.name, "/app/")
         copyFile("application.yaml", "/app/")
         exposePort(8080)

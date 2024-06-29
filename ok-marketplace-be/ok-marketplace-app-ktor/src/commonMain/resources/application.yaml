@@ -24,3 +24,15 @@ ktor:
 #  logger: socket
 #  socketLogger:
 #    port: 24224
+
+marketplace:
+  repository:
+    test: "inmemory"
+    prod: "$DB_TYPE_PROD:inmemory"
+    psql:
+      schema: public
+      database: "$MKPLADS_DB:marketplace-ads"
+      host: "$MKPLADS_HOST:localhost"
+      port: "$MKPLADS_PORT:5432"
+      user: "$MKPLADS_USER:postgres"
+      password: "$MKPLADS_PASS:marketplace-pass"

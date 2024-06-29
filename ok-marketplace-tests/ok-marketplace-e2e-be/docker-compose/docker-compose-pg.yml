@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  psql:
+    image: postgres
+    #    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    ports:
+#      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "marketplace-pass"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "marketplace_ads"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  liquibase:
+    image: liquibase/liquibase
+    volumes:
+      - ./volumes/liquibase-psql:/liquibase/changelog
+    depends_on:
+      psql:
+        condition: service_healthy
+    command: ["--defaults-file=/liquibase/changelog/liquibase.properties", "--search-path=/liquibase/changelog", "--url=jdbc:postgresql://psql:5432/marketplace_ads", "update"]
+
+#volumes:
+#  postgres_data:

@@ -9,7 +9,6 @@
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "search",
       "result": "success",
       "ads": [
         {
