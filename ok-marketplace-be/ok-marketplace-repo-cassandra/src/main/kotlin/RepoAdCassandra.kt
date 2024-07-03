@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.marketplace.backend.repo.cassandra
 
 import com.benasher44.uuid.uuid4
 import com.datastax.oss.driver.api.core.CqlSession
+import com.datastax.oss.driver.api.core.cql.AsyncResultSet
 import com.datastax.oss.driver.api.querybuilder.SchemaBuilder
 import com.datastax.oss.driver.internal.core.type.codec.extras.enums.EnumNameCodec
 import com.datastax.oss.driver.internal.core.type.codec.registry.DefaultCodecRegistry
@@ -82,7 +83,7 @@ class RepoAdCassandra(
 
     override suspend fun createAd(rq: DbAdRequest): IDbAdResponse = tryAdMethod {
         val new = rq.ad.copy(id = MkplAdId(randomUuid()), lock = MkplAdLock(randomUuid()))
-        dao.create(AdCassandraDTO(new))
+        dao.create(AdCassandraDTO(new)).await()
         DbAdResponseOk(new)
     }
 
@@ -98,7 +99,7 @@ class RepoAdCassandra(
         val new = rq.ad.copy(lock = MkplAdLock(randomUuid()))
         val dto = AdCassandraDTO(new)
 
-        val res = dao.update(dto, prevLock).await()
+        val res: AsyncResultSet = dao.update(dto, prevLock).await()
         val isSuccess = res.wasApplied()
         val resultField = res.one()
             ?.takeIf { it.columnDefinitions.contains(AdCassandraDTO.COLUMN_LOCK) }
