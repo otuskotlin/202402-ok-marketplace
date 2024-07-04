@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdFilter
 import ru.otus.otuskotlin.marketplace.common.models.MkplState
@@ -10,7 +9,7 @@ import kotlin.test.assertEquals
 
 class ValidateSearchStringLengthTest {
     @Test
-    fun emptyString() = runTest {
+    fun emptyString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = ""))
         chain.exec(ctx)
         assertEquals(MkplState.RUNNING, ctx.state)
@@ -18,7 +17,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun blankString() = runTest {
+    fun blankString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = "  "))
         chain.exec(ctx)
         assertEquals(MkplState.RUNNING, ctx.state)
@@ -26,7 +25,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun shortString() = runTest {
+    fun shortString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = "12"))
         chain.exec(ctx)
         assertEquals(MkplState.FAILING, ctx.state)
@@ -35,7 +34,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun normalString() = runTest {
+    fun normalString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = "123"))
         chain.exec(ctx)
         assertEquals(MkplState.RUNNING, ctx.state)
@@ -43,7 +42,7 @@ class ValidateSearchStringLengthTest {
     }
 
     @Test
-    fun longString() = runTest {
+    fun longString() = runBizTest {
         val ctx = MkplContext(state = MkplState.RUNNING, adFilterValidating = MkplAdFilter(searchString = "12".repeat(51)))
         chain.exec(ctx)
         assertEquals(MkplState.FAILING, ctx.state)

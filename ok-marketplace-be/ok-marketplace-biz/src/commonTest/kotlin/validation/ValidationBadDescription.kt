@@ -1,15 +1,16 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
 import ru.otus.otuskotlin.marketplace.common.MkplContext
-import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.models.MkplCommand
+import ru.otus.otuskotlin.marketplace.common.models.MkplState
+import ru.otus.otuskotlin.marketplace.common.models.MkplWorkMode
 import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun validationDescriptionCorrect(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationDescriptionCorrect(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -22,7 +23,7 @@ fun validationDescriptionCorrect(command: MkplCommand, processor: MkplAdProcesso
     assertContains(ctx.adValidated.description, "болт")
 }
 
-fun validationDescriptionTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationDescriptionTrim(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -37,7 +38,7 @@ fun validationDescriptionTrim(command: MkplCommand, processor: MkplAdProcessor) 
     assertEquals("abc", ctx.adValidated.description)
 }
 
-fun validationDescriptionEmpty(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationDescriptionEmpty(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -54,7 +55,7 @@ fun validationDescriptionEmpty(command: MkplCommand, processor: MkplAdProcessor)
     assertContains(error?.message ?: "", "description")
 }
 
-fun validationDescriptionSymbols(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationDescriptionSymbols(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,

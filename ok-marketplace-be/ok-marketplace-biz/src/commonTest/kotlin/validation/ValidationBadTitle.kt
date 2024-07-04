@@ -1,15 +1,16 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
-import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
 import ru.otus.otuskotlin.marketplace.common.MkplContext
-import ru.otus.otuskotlin.marketplace.common.models.*
+import ru.otus.otuskotlin.marketplace.common.models.MkplCommand
+import ru.otus.otuskotlin.marketplace.common.models.MkplState
+import ru.otus.otuskotlin.marketplace.common.models.MkplWorkMode
 import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun validationTitleCorrect(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationTitleCorrect(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -24,7 +25,7 @@ fun validationTitleCorrect(command: MkplCommand, processor: MkplAdProcessor) = r
     assertEquals("abc", ctx.adValidated.title)
 }
 
-fun validationTitleTrim(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationTitleTrim(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -39,7 +40,7 @@ fun validationTitleTrim(command: MkplCommand, processor: MkplAdProcessor) = runT
     assertEquals("abc", ctx.adValidated.title)
 }
 
-fun validationTitleEmpty(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationTitleEmpty(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
@@ -56,7 +57,7 @@ fun validationTitleEmpty(command: MkplCommand, processor: MkplAdProcessor) = run
     assertContains(error?.message ?: "", "title")
 }
 
-fun validationTitleSymbols(command: MkplCommand, processor: MkplAdProcessor) = runTest {
+fun validationTitleSymbols(command: MkplCommand, processor: MkplAdProcessor) = runBizTest {
     val ctx = MkplContext(
         command = command,
         state = MkplState.NONE,
