@@ -40,10 +40,12 @@ ktor:
 #    queue: mkpl-ads-v1-queue
 #    consumerTag: "mkpl-ads-v1-consumer"
 #    exchangeType: direct
+
 marketplace:
   repository:
     test: "inmemory"
     prod: "$DB_TYPE_PROD:inmemory"
+
     psql:
       schema: public
       database: "$MKPLADS_DB:marketplace-ads"
@@ -51,3 +53,17 @@ marketplace:
       port: "$MKPLADS_PORT:5432"
       user: "$MKPLADS_USER:postgres"
       password: "$MKPLADS_PASS:marketplace-pass"
+
+    cassandra:
+      hosts: localhost
+      keyspace: test_keyspace
+      pass: cassandra
+      port: 9042
+      user: cassandra
+
+    gremlin:
+      host: "$DB_GREMLIN_HOST:localhost"
+      user: "$DB_GREMLIN_HOST:root"
+      password: "$DB_GREMLIN_HOST:root_root"
+      port: "$DB_GREMLIN_PORT:8182"
+      enableSsl: false

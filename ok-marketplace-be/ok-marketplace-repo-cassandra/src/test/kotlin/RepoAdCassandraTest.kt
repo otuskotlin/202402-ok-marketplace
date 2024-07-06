@@ -4,39 +4,38 @@ import com.benasher44.uuid.uuid4
 import org.testcontainers.containers.CassandraContainer
 import ru.otus.otuskotlin.marketplace.backend.repo.tests.*
 import ru.otus.otuskotlin.marketplace.repo.common.AdRepoInitialized
-import ru.otus.otuskotlin.marketplace.repo.common.IRepoAdInitializable
 import java.time.Duration
 
 class RepoAdCassandraCreateTest : RepoAdCreateTest() {
-    override val repo: IRepoAdInitializable = AdRepoInitialized(
+    override val repo = AdRepoInitialized(
         initObjects = initObjects,
-        repo = TestCompanion.repository("ks_create", uuidNew.asString())
+        repo = TestCompanion.repository("ks_create", lockNew.asString())
     )
 }
 
 class RepoAdCassandraReadTest : RepoAdReadTest() {
-    override val repo: IRepoAdInitializable = AdRepoInitialized(
+    override val repo = AdRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_read")
     )
 }
 
 class RepoAdCassandraUpdateTest : RepoAdUpdateTest() {
-    override val repo: IRepoAdInitializable = AdRepoInitialized(
+    override val repo = AdRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_update", lockNew.asString())
     )
 }
 
 class RepoAdCassandraDeleteTest : RepoAdDeleteTest() {
-    override val repo: IRepoAdInitializable = AdRepoInitialized(
+    override val repo = AdRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_delete")
     )
 }
 
 class RepoAdCassandraSearchTest : RepoAdSearchTest() {
-    override val repo: IRepoAdInitializable = AdRepoInitialized(
+    override val repo = AdRepoInitialized(
         initObjects = initObjects,
         repo = TestCompanion.repository("ks_search")
     )

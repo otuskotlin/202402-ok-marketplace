@@ -5,14 +5,14 @@ import ru.otus.otuskotlin.marketplace.common.models.MkplDealSide
 import ru.otus.otuskotlin.marketplace.common.models.MkplUserId
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdFilterRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdsResponseOk
-import ru.otus.otuskotlin.marketplace.common.repo.IRepoAd
+import ru.otus.otuskotlin.marketplace.repo.common.AdRepoInitialized
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 
 abstract class RepoAdSearchTest {
-    abstract val repo: IRepoAd
+    abstract val repo: AdRepoInitialized
 
     protected open val initializedObjects: List<MkplAd> = initObjects
 

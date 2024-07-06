@@ -6,14 +6,14 @@ import ru.otus.otuskotlin.marketplace.common.models.MkplError
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdIdRequest
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseErr
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseOk
-import ru.otus.otuskotlin.marketplace.common.repo.IRepoAd
+import ru.otus.otuskotlin.marketplace.repo.common.AdRepoInitialized
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 
 abstract class RepoAdReadTest {
-    abstract val repo: IRepoAd
+    abstract val repo: AdRepoInitialized
     protected open val readSucc = initObjects[0]
 
     @Test

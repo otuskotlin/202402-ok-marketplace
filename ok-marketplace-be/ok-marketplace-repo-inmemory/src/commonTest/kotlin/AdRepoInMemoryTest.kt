@@ -4,7 +4,7 @@ import ru.otus.otuskotlin.marketplace.repo.inmemory.AdRepoInMemory
 
 class AdRepoInMemoryCreateTest : RepoAdCreateTest() {
     override val repo = AdRepoInitialized(
-        AdRepoInMemory(randomUuid = { uuidNew.asString() }),
+        AdRepoInMemory(randomUuid = { lockNew.asString() }),
         initObjects = initObjects,
     )
 }
