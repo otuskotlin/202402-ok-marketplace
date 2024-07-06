@@ -18,7 +18,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.`__` as bs
  * Для запуска тестов этого файла требуется запустить локальный экземпляр ArcadeDB
  * Можно использовать файл /deploy/docker-compose-arcadedb.yml
  */
-@Ignore("Тест для экспериментов")
+//@Ignore("Тест для экспериментов")
 class SimpleTest {
     private val host: String = "localhost"
     private val user: String = "root"
@@ -26,7 +26,7 @@ class SimpleTest {
 
     private val dbName: String = "graph"
 
-    // private val dbName: String = "mkpl" // Этот граф должен быть настроен в /home/arcadedb/config/gremlin-server.groovy
+//     private val dbName: String = "mkpl" // Этот граф должен быть настроен в /home/arcadedb/config/gremlin-server.groovy
     private val aPort: Int = 2480
     private val gPort: Int = 8182
 
@@ -116,7 +116,7 @@ class SimpleTest {
                     .toList()
                 println("CONTENT: ${x}")
 
-                val y = g.V().hasLabel("Test").`as`("a")
+                val y = g.V().hasLabel("Test") //.`as`("a")
                     .project<Any?>("lock", "ownerId", "z")
                     .by("lock")
                     // Извлекаем ID связанного объекта (связь через грань Owns
@@ -173,7 +173,7 @@ class SimpleTest {
                 .choose(
                     bs.select<Vertex, Vertex>("a")
                         .values<String>("lock")
-                        .`is`("1112"),
+                        .`is`("111"),
                     bs.select<Vertex, String>("a").drop().inject("success"),
                     bs.constant("lock-failure")
                 ).toList()

@@ -17,7 +17,7 @@ class RepoAdGremlinReadTest : RepoAdReadTest() {
         initObjects = initObjects,
         repo = ArcadeDbContainer.repository("test_read")
     )
-     override val readSucc = repo.initializedObjects[0]
+    override val readSucc = repo.initializedObjects[0]
 }
 
 class RepoAdGremlinUpdateTest : RepoAdUpdateTest() {

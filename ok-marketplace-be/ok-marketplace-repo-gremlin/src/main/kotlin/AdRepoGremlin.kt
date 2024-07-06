@@ -30,7 +30,7 @@ class AdRepoGremlin(
     private val graph: String = "graph", // Этот граф должен быть настроен в /home/arcadedb/config/gremlin-server.groovy
     val randomUuid: () -> String = { uuid4().toString() },
     initRepo: ((GraphTraversalSource) -> Unit)? = null,
-) : AdRepoBase(), IRepoAd, IRepoAdInitializable {
+) : AdRepoBase(), IRepoAd, IRepoAdInitializable, AutoCloseable {
 
     private val cluster by lazy {
         Cluster.build().apply {
@@ -66,7 +66,7 @@ class AdRepoGremlin(
             ?: errorDb(UnknownDbException("Db object was not returned after creation by DB: $rq"))
     }
 
-    private suspend fun <T: Any> checkNotFound(block: suspend () -> T?): T? = runCatching { block() }.getOrElse { e ->
+    private suspend fun <T : Any> checkNotFound(block: suspend () -> T?): T? = runCatching { block() }.getOrElse { e ->
         if (e.cause is ResponseException) null else throw e
     }
 
@@ -146,6 +146,15 @@ class AdRepoGremlin(
             .listMkplAd()
             .toList()
             .let { result -> DbAdsResponseOk(data = result.map { it.toMkplAd() }) }
+    }
+
+    override fun close() {
+        if ((::g::getDelegate as? Lazy<*>)?.isInitialized() == true) {
+            g.close()
+        }
+        if ((::cluster::getDelegate as? Lazy<*>)?.isInitialized() == true) {
+            cluster.close()
+        }
     }
 
 }
