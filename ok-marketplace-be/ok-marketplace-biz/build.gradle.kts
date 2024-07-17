@@ -10,7 +10,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
 
-                implementation(libs.cor)
+                implementation(libs.mkpl.cor)
+                implementation(libs.mkpl.state.common)
 
                 implementation(project(":ok-marketplace-common"))
                 implementation(project(":ok-marketplace-stubs"))

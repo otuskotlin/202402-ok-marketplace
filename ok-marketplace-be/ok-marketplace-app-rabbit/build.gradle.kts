@@ -20,7 +20,7 @@ dependencies {
 
     implementation(project(":ok-marketplace-common"))
     implementation(project(":ok-marketplace-app-common"))
-    implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
+    implementation(libs.mkpl.logs.logback)
 
     // v1 api
     implementation(project(":ok-marketplace-api-v1-jackson"))

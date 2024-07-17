@@ -81,11 +81,15 @@ kotlin {
                 implementation(projects.okMarketplaceRepoInmemory)
                 implementation(projects.okMarketplaceRepoPostgres)
 
+                // States
+                implementation(libs.mkpl.state.common)
+                implementation(libs.mkpl.state.biz)
+
                 // logging
                 implementation(project(":ok-marketplace-api-log1"))
-                implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-common")
-                implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-kermit")
-                implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-socket")
+                implementation(libs.mkpl.logs.common)
+                implementation(libs.mkpl.logs.kermit)
+                implementation(libs.mkpl.logs.socket)
             }
         }
 
@@ -115,13 +119,14 @@ kotlin {
                 implementation(libs.logback)
 
                 // transport models
-                implementation(project(":ok-marketplace-api-v1-jackson"))
-                implementation(project(":ok-marketplace-api-v1-mappers"))
+                implementation(projects.okMarketplaceApiV1Jackson)
+                implementation(projects.okMarketplaceApiV1Mappers)
+                implementation(projects.okMarketplaceApiV2Kmp)
 
                 implementation(projects.okMarketplaceRepoCassandra)
                 implementation(projects.okMarketplaceRepoGremlin)
 
-                implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
+                implementation(libs.mkpl.logs.logback)
                 implementation(libs.testcontainers.cassandra)
                 implementation(libs.testcontainers.core)
             }

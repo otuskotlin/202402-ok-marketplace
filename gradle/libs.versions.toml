@@ -1,4 +1,5 @@
 [versions]
+mkpl = "0.0.1"
 kotlin = "1.9.23"
 
 kotlinx-datetime = "0.5.0"
@@ -29,7 +30,8 @@ testcontainers = "1.19.7"
 muschko = "9.4.0"
 
 # BASE
-jvm-compiler = "17"
+kotlin-language = "1.9"
+jvm-compiler = "21"
 jvm-language = "21"
 
 [libraries]
@@ -44,7 +46,6 @@ coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ve
 coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines" }
 coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
 coroutines-jdk9 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk9", version.ref = "coroutines" }
-cor = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-cor" }
 uuid = "com.benasher44:uuid:0.8.4"
 
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
@@ -122,6 +123,15 @@ testcontainers-core = { module = "org.testcontainers:testcontainers", version.re
 testcontainers-rabbitmq = { module = "org.testcontainers:rabbitmq", version.ref = "testcontainers" }
 testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 testcontainers-cassandra = { module = "org.testcontainers:cassandra", version.ref = "testcontainers" }
+
+mkpl-logs-common = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-common", version.ref = "mkpl" }
+mkpl-logs-kermit = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-kermit", version.ref = "mkpl" }
+mkpl-logs-logback = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback", version.ref = "mkpl" }
+mkpl-logs-socket = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-socket", version.ref = "mkpl" }
+mkpl-cor = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-cor", version.ref = "mkpl" }
+mkpl-state-common = { module = "ru.otus.otuskotlin.marketplace.state:ok-marketplace-states-common", version.ref = "mkpl" }
+mkpl-state-biz = { module = "ru.otus.otuskotlin.marketplace.state:ok-marketplace-states-biz", version.ref = "mkpl" }
+
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-datatest", "kotest-property"]
