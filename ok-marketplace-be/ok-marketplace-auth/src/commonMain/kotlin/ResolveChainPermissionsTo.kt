@@ -41,5 +41,6 @@ private val groupPermissionsDenys = mapOf(
     MkplUserGroups.BAN_AD to setOf(
         MkplUserPermissions.UPDATE_OWN,
         MkplUserPermissions.CREATE_OWN,
+        MkplUserPermissions.DELETE_OWN,
     ),
 )
