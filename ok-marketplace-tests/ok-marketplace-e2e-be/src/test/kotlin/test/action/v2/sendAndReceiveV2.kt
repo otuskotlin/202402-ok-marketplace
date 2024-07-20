@@ -11,12 +11,10 @@ import ru.otus.otuskotlin.marketplace.e2e.be.fixture.client.Client
 suspend inline fun <reified Rq: IRequest, reified Rs: IResponse> Client.sendAndReceive(path: String, request: Rq): Rs {
     val log = Logger
     val requestBody = apiV2RequestSimpleSerialize(request)
-//    val requestBody = apiV2RequestSerialize(request)
     log.w { "Send to v2/$path\n$requestBody" }
 
     val responseBody = sendAndReceive("v2", path, requestBody)
     log.w { "Received\n$responseBody" }
 
-//    return apiV2ResponseDeserialize(responseBody)
     return apiV2ResponseSimpleDeserialize(responseBody)
 }

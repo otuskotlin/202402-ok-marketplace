@@ -4,7 +4,6 @@ import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.MkplState
 import ru.otus.otuskotlin.marketplace.cor.ICorChainDsl
 import ru.otus.otuskotlin.marketplace.cor.worker
-import ru.otus.otuskotlin.marketplace.stubs.MkplAdStub
 
 fun ICorChainDsl<MkplContext>.repoPrepareCreate(title: String) = worker {
     this.title = title
@@ -12,7 +11,6 @@ fun ICorChainDsl<MkplContext>.repoPrepareCreate(title: String) = worker {
     on { state == MkplState.RUNNING }
     handle {
         adRepoPrepare = adValidated.deepCopy()
-        // TODO будет реализовано в занятии по управлению пользвателями
-        adRepoPrepare.ownerId = MkplAdStub.get().ownerId
+        adRepoPrepare.ownerId = principal.id
     }
 }

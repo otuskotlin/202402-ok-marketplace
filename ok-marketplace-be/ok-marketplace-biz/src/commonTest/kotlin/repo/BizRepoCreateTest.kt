@@ -3,17 +3,19 @@ package ru.otus.otuskotlin.marketplace.biz.repo
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.backend.repo.tests.AdRepositoryMock
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.MkplCorSettings
 import ru.otus.otuskotlin.marketplace.common.models.*
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdResponseOk
+import ru.otus.otuskotlin.marketplace.stubs.MkplAdStubBolts
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class BizRepoCreateTest {
 
-    private val userId = MkplUserId("321")
+    private val userId = MkplAdStubBolts.AD_DEMAND_BOLT1.ownerId
     private val command = MkplCommand.CREATE
     private val uuid = "10000000-0000-0000-0000-000000000001"
     private val repo = AdRepositoryMock(
@@ -48,6 +50,7 @@ class BizRepoCreateTest {
                 visibility = MkplVisibility.VISIBLE_PUBLIC,
             ),
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(MkplState.FINISHING, ctx.state)
         assertNotEquals(MkplAdId.NONE, ctx.adResponse.id)

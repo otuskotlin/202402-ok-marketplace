@@ -16,9 +16,6 @@ object MkplAdStubBolts {
                 MkplAdPermissionClient.READ,
                 MkplAdPermissionClient.UPDATE,
                 MkplAdPermissionClient.DELETE,
-                MkplAdPermissionClient.MAKE_VISIBLE_PUBLIC,
-                MkplAdPermissionClient.MAKE_VISIBLE_GROUP,
-                MkplAdPermissionClient.MAKE_VISIBLE_OWNER,
             )
         )
     val AD_SUPPLY_BOLT1 = AD_DEMAND_BOLT1.copy(adType = MkplDealSide.SUPPLY)

@@ -1,0 +1,47 @@
+services:
+  app:
+    image: ok-marketplace-app-ktor-x64:0.0.1
+    environment:
+      DB_TYPE_PROD: "mem"
+
+  envoy:
+    image: envoyproxy/envoy:v1.29.0  # Use the official Envoy proxy image
+    volumes:
+      - ./volumes/envoy/envoy.yaml:/etc/envoy/envoy.yaml  # Mount your Envoy configuration file
+    #      - ./envoy/certs:/etc/envoy/certs  # Mount your TLS certificates
+    ports:
+      - "8080:8080"
+    depends_on:
+      keycloak:
+        condition: service_healthy
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+#    ports:
+#      - "8081:8080"
+    volumes:
+      #      - ./keycloak:/tmp
+      - ./volumes/keycloak/import:/opt/keycloak/data/import
+    #      - ./keycloak/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
+    #      - ./keycloak/certs/keycloak.jks:/etc/x509/https/keystore  # Mount your Keycloak keystore
+    environment:
+      KEYCLOAK_USER: otus
+      KEYCLOAK_PASSWORD: otus
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_IMPORT: "/tmp/realm-export.json"
+      KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME_URL: "http://localhost:8080/"
+    healthcheck:
+      test: [ "CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/8080;echo -e \"GET /health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command:
+      - start-dev
+      #      - --features admin-fine-grained-authz
+      - --hostname-port=8081
+      - --import-realm
+#      - --proxy edge
+      - --proxy-headers=forwarded
+      - --hostname-strict=false

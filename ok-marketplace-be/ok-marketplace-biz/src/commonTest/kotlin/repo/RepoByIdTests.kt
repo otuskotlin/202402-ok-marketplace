@@ -3,6 +3,7 @@ package repo
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.backend.repo.tests.AdRepositoryMock
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.MkplCorSettings
 import ru.otus.otuskotlin.marketplace.common.models.*
@@ -44,6 +45,7 @@ fun repoNotFoundTest(command: MkplCommand) = runTest {
             lock = MkplAdLock("123-234-abc-ABC"),
         ),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(MkplState.FAILING, ctx.state)
     assertEquals(MkplAd(), ctx.adResponse)

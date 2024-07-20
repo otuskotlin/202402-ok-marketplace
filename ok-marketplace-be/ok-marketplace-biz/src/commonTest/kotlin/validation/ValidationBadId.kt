@@ -1,6 +1,7 @@
 package ru.otus.otuskotlin.marketplace.biz.validation
 
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.models.MkplAdId
 import ru.otus.otuskotlin.marketplace.common.models.MkplCommand
@@ -18,6 +19,7 @@ fun validationIdCorrect(command: MkplCommand, processor: MkplAdProcessor) = runB
         workMode = MkplWorkMode.TEST,
         adRequest = MkplAdStub.get(),
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkplState.FAILING, ctx.state)
@@ -32,6 +34,7 @@ fun validationIdTrim(command: MkplCommand, processor: MkplAdProcessor) = runBizT
             id = MkplAdId(" \n\t ${id.asString()} \n\t ")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(MkplState.FAILING, ctx.state)
@@ -46,6 +49,7 @@ fun validationIdEmpty(command: MkplCommand, processor: MkplAdProcessor) = runBiz
             id = MkplAdId("")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(MkplState.FAILING, ctx.state)
@@ -63,6 +67,7 @@ fun validationIdFormat(command: MkplCommand, processor: MkplAdProcessor) = runBi
             id = MkplAdId("!@#\$%^&*(),.{}")
         },
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(MkplState.FAILING, ctx.state)

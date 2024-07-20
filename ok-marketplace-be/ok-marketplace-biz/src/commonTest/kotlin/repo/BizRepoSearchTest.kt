@@ -3,16 +3,18 @@ package ru.otus.otuskotlin.marketplace.biz.repo
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.marketplace.backend.repo.tests.AdRepositoryMock
 import ru.otus.otuskotlin.marketplace.biz.MkplAdProcessor
+import ru.otus.otuskotlin.marketplace.biz.addTestPrincipal
 import ru.otus.otuskotlin.marketplace.common.MkplContext
 import ru.otus.otuskotlin.marketplace.common.MkplCorSettings
 import ru.otus.otuskotlin.marketplace.common.models.*
 import ru.otus.otuskotlin.marketplace.common.repo.DbAdsResponseOk
+import ru.otus.otuskotlin.marketplace.stubs.MkplAdStubBolts
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BizRepoSearchTest {
 
-    private val userId = MkplUserId("321")
+    private val userId = MkplAdStubBolts.AD_DEMAND_BOLT1.ownerId
     private val command = MkplCommand.SEARCH
     private val initAd = MkplAd(
         id = MkplAdId("123"),
@@ -43,6 +45,7 @@ class BizRepoSearchTest {
                 dealSide = MkplDealSide.DEMAND
             ),
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(MkplState.FINISHING, ctx.state)
         assertEquals(1, ctx.adsResponse.size)
