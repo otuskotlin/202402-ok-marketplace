@@ -132,6 +132,9 @@ mkpl-cor = { module = "ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-co
 mkpl-state-common = { module = "ru.otus.otuskotlin.marketplace.state:ok-marketplace-states-common", version.ref = "mkpl" }
 mkpl-state-biz = { module = "ru.otus.otuskotlin.marketplace.state:ok-marketplace-states-biz", version.ref = "mkpl" }
 
+# Machine Learning
+ml-tokenizer = "ai.djl.huggingface:tokenizers:0.25.0"
+ml-onnx-runtime = "com.microsoft.onnxruntime:onnxruntime:1.16.3"
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-datatest", "kotest-property"]
